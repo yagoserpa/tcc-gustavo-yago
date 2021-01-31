@@ -20,12 +20,12 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findAll() {
-        return template.query("SELECT user_id, name FROM users", User::new);
+        return template.query("SELECT user_id, name, email, dre, siape, register_date, gender, status, title, position, room, lattes, user_profile, course, origin, user_type FROM users", User::new);
     }
 
     @Override
     public Optional<User> findById(String id) {
-        List<User> users = template.query("SELECT user_id, name FROM users WHERE id = ? LIMIT 1", User::new, id);
+        List<User> users = template.query("SELECT user_id, name, email, dre, siape, register_date, gender, status, title, position, room, lattes, user_profile, course, origin, user_type FROM users WHERE user_id = ? LIMIT 1", User::new, id);
         if (users.isEmpty()) {
             return Optional.empty();
         }
@@ -34,15 +34,29 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void update(String id, User user) {
-        template.update("UPDATE users SET name = ? WHERE id = ?",
+        template.update("UPDATE users SET name = ?, email = ?, dre = ?, siape = ?, gender = ?, status = ?, title = ?, position = ?, room = ?, lattes = ?, user_profile = ?, course = ?, origin = ?, user_type = ? WHERE user_id = ?",
             user.getName(),
+                user.getEmail(),
+                user.getDre(),
+                user.getSiape(),
+                user.getGender(),
+                user.getStatus(),
+                user.getTitle(),
+                user.getPosition(),
+                user.getRoom(),
+                user.getLattes(),
+                user.getUserProfile(),
+                user.getCourse(),
+                user.getOrigin(),
+                user.getUserType(),
             id
         );
     }
 
     @Override
     public void delete(String id) {
-        template.update("UPDATE users SET status = 'INACTIVE' WHERE id = ?", id);
-        template.update("DELETE users WHERE id = ?", id);
+        template.update("UPDATE users SET status = ? WHERE user_id = ?",
+                User.Status.DELETED,
+                id);
     }
 }
