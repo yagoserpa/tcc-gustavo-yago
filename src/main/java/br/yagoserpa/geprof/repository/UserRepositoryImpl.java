@@ -13,7 +13,7 @@ public class UserRepositoryImpl implements UserRepository {
     private final JdbcTemplate template;
 
     public UserRepositoryImpl(
-        JdbcTemplate template
+            JdbcTemplate template
     ) {
         this.template = template;
     }
@@ -33,14 +33,15 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void update(String id, User user) {
-        template.update("UPDATE users SET name = ?, email = ?, dre = ?, siape = ?, gender = ?, status = ?, title = ?, position = ?, room = ?, lattes = ?, user_profile = ?, course = ?, origin = ?, user_type = ? WHERE user_id = ?",
-            user.getName(),
+    public void insert(User user) {
+        template.query("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                User::new,
+                user.getName(),
                 user.getEmail(),
                 user.getDre(),
                 user.getSiape(),
                 user.getGender(),
-                user.getStatus(),
+                user.getStatus().ordinal(),
                 user.getTitle(),
                 user.getPosition(),
                 user.getRoom(),
@@ -48,8 +49,28 @@ public class UserRepositoryImpl implements UserRepository {
                 user.getUserProfile(),
                 user.getCourse(),
                 user.getOrigin(),
-                user.getUserType(),
-            id
+                user.getUserType().ordinal()
+        );
+    }
+
+    @Override
+    public void update(String id, User user) {
+        template.update("UPDATE users SET name = ?, email = ?, dre = ?, siape = ?, gender = ?, status = ?, title = ?, position = ?, room = ?, lattes = ?, user_profile = ?, course = ?, origin = ?, user_type = ? WHERE user_id = ?",
+                user.getName(),
+                user.getEmail(),
+                user.getDre(),
+                user.getSiape(),
+                user.getGender(),
+                user.getStatus().ordinal(),
+                user.getTitle(),
+                user.getPosition(),
+                user.getRoom(),
+                user.getLattes(),
+                user.getUserProfile(),
+                user.getCourse(),
+                user.getOrigin(),
+                user.getUserType().ordinal(),
+                id
         );
     }
 

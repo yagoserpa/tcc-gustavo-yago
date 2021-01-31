@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 
 public class User {
 
-    private String id;
+    private Integer id;
     private String name;
     private String email;
     private String password;
@@ -28,7 +28,7 @@ public class User {
     }
 
     public User(ResultSet resultSet, int row) throws SQLException {
-        id = resultSet.getString("user_id");
+        id = resultSet.getInt("user_id");
         name = resultSet.getString("name");
         email = resultSet.getString("email");
         userType = Type.fromValue(resultSet.getInt("user_type"));
@@ -54,11 +54,11 @@ public class User {
         this.email = email;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
