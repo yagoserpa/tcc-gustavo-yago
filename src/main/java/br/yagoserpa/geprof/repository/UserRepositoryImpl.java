@@ -54,7 +54,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void update(String id, User user) {
+    public void update(Integer id, User user) {
         template.update("UPDATE users SET name = ?, email = ?, dre = ?, siape = ?, gender = ?, status = ?, title = ?, position = ?, room = ?, lattes = ?, user_profile = ?, course = ?, origin = ?, user_type = ? WHERE user_id = ?",
                 user.getName(),
                 user.getEmail(),

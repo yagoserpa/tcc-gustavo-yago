@@ -29,8 +29,8 @@ public class UserController {
 
     @PutMapping("/api/v1/user/{id}")
     public void update(
-        @PathVariable(value = "id") String id,
-        @RequestBody User user
+            @PathVariable(value = "id") Integer id,
+            @RequestBody User user
     ) {
         userRepository.update(id, user);
     }
