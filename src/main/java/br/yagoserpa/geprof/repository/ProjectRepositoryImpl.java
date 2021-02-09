@@ -34,7 +34,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
     @Override
     public void insert(Project project) {
-        template.query("INSERT INTO project VALUES (?, ?, ?, ?, ?, ?, ?)",
+        template.query("INSERT INTO project (name, subject, title, descrption, status, register_date, keywords) VALUES (?, ?, ?, ?, ?, ?, ?)",
                 Project::new,
                 project.getName(),
                 project.getSubject(),

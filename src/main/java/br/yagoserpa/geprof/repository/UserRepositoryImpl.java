@@ -34,7 +34,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void insert(User user) {
-        template.query("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        template.query("INSERT INTO users (name, email, dre, siape, gender, status, title, position, room, lattes, user_profile, course, origin, user_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 User::new,
                 user.getName(),
                 user.getEmail(),
