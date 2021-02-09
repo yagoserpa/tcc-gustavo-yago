@@ -255,7 +255,7 @@
     <column id="COL73" populated="true" UUID="644e0538-a203-47a1-9a52-f25d302b81e0" autoIncrement="false" autoIncrementSequenceName="File_content_seq" defaultValue="" name="content" nullable="1" physicalName="content" precision="100" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL74" populated="true" UUID="02bdd51a-28ab-47d8-92e2-4a54ada1547d" autoIncrement="false" autoIncrementSequenceName="File_comments_seq" defaultValue="" name="comments" nullable="1" physicalName="comments" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="2004" userDefinedTypeUUID="5c50e616-a448-40e1-abcd-5bfc04dcc607" >
+    <column id="COL74" populated="true" UUID="02bdd51a-28ab-47d8-92e2-4a54ada1547d" autoIncrement="false" autoIncrementSequenceName="File_comments_seq" defaultValue="" name="comments" nullable="1" physicalName="comments" precision="4000" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     </folder>
