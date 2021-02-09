@@ -24,7 +24,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findById(String id) {
+    public Optional<User> findById(Integer id) {
         List<User> users = template.query("SELECT user_id, name, email, dre, siape, register_date, gender, status, title, position, room, lattes, user_profile, course, origin, user_type FROM users WHERE user_id = ? LIMIT 1", User::new, id);
         if (users.isEmpty()) {
             return Optional.empty();

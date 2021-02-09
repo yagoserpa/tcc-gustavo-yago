@@ -24,7 +24,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
 
     @Override
-    public Optional<Project> findById(String id) {
+    public Optional<Project> findById(Integer id) {
         List<Project> projects = template.query("SELECT * FROM project WHERE project_id = ? LIMIT 1", Project::new, id);
         if (projects.isEmpty()) {
             return Optional.empty();

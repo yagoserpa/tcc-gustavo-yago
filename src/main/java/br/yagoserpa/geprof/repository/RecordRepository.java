@@ -9,7 +9,7 @@ public interface RecordRepository {
 
     List<Record> findAll();
 
-    Optional<Record> findById(String id);
+    Optional<Record> findById(Integer id);
 
     void insert(Record record);
 

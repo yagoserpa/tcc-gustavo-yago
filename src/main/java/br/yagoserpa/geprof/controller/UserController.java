@@ -17,7 +17,7 @@ public class UserController {
 
     @GetMapping("/api/v1/user/{id}")
     public User find(
-        @PathVariable(value = "id") String id
+            @PathVariable(value = "id") Integer id
     ) {
         return userRepository.findById(id).orElse(null);
     }
@@ -25,6 +25,13 @@ public class UserController {
     @GetMapping("/api/v1/user")
     public List<User> all() {
         return userRepository.findAll();
+    }
+
+    @PostMapping("/api/v1/user/")
+    public void insert(
+            @RequestBody User user
+    ) {
+        userRepository.insert(user);
     }
 
     @PutMapping("/api/v1/user/{id}")
@@ -37,7 +44,7 @@ public class UserController {
 
     @DeleteMapping("/api/v1/user/{id}")
     public void delete(
-        @PathVariable(value = "id") String id
+            @PathVariable(value = "id") String id
     ) {
         userRepository.delete(id);
     }

@@ -9,7 +9,7 @@ public interface ProjectRepository {
 
     List<Project> findAll();
 
-    Optional<Project> findById(String id);
+    Optional<Project> findById(Integer id);
 
     void insert(Project record);
 

@@ -24,7 +24,7 @@ public class RecordRepositoryImpl implements RecordRepository {
     }
 
     @Override
-    public Optional<Record> findById(String id) {
+    public Optional<Record> findById(Integer id) {
         List<Record> records = template.query("SELECT * FROM record WHERE record_id = ? LIMIT 1", Record::new, id);
         if (records.isEmpty()) {
             return Optional.empty();

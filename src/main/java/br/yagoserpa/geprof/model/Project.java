@@ -95,6 +95,7 @@ public class Project {
 
     public enum Status {
         STARTED,
+        IN_PROGRESS,
         ENDED;
 
         public static Status fromValue(int ordinal) {
