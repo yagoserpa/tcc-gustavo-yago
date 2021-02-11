@@ -15,6 +15,6 @@ public interface FieldOfInterestRepository {
 
     void update(Integer id, FieldOfInterest fieldOfInterest);
 
-    void delete(String id);
+    void delete(Integer id);
 
 }

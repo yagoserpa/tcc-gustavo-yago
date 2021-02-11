@@ -44,7 +44,7 @@ public class UserController {
 
     @DeleteMapping("/api/v1/user/{id}")
     public void delete(
-            @PathVariable(value = "id") String id
+            @PathVariable(value = "id") Integer id
     ) {
         userRepository.delete(id);
     }

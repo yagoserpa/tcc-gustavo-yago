@@ -44,7 +44,7 @@ public class FieldOfInterestController {
 
     @DeleteMapping("/api/v1/field/{id}")
     public void delete(
-            @PathVariable(value = "id") String id
+            @PathVariable(value = "id") Integer id
     ) {
         fieldOfInterestRepository.delete(id);
     }

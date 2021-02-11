@@ -51,7 +51,7 @@ public class FieldOfInterestRepositoryImpl implements FieldOfInterestRepository 
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(Integer id) {
         template.update("DELETE FROM fieldofinterest WHERE field_id = ?",
                 id);
     }

@@ -75,7 +75,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(Integer id) {
         template.update("UPDATE users SET status = ? WHERE user_id = ?",
                 User.Status.DELETED,
                 id);
