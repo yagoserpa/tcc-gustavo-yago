@@ -24,6 +24,9 @@ public class User {
     private String course;
     private String origin;
 
+    private Boolean committee;
+    private Boolean coop;
+
     public User() {
     }
 
@@ -44,6 +47,12 @@ public class User {
         userProfile = resultSet.getString("user_profile");
         course = resultSet.getString("course");
         origin = resultSet.getString("origin");
+
+        try {
+            committee = resultSet.getBoolean("committee");
+            coop = resultSet.getBoolean("coop");
+        } catch (Exception ignored) {
+        }
     }
 
     public String getEmail() {
@@ -180,6 +189,22 @@ public class User {
 
     public void setOrigin(String origin) {
         this.origin = origin;
+    }
+
+    public Boolean getCommittee() {
+        return committee;
+    }
+
+    public void setCommittee(Boolean committee) {
+        this.committee = committee;
+    }
+
+    public Boolean getCoop() {
+        return coop;
+    }
+
+    public void setCoop(Boolean coop) {
+        this.coop = coop;
     }
 
     public enum Status {

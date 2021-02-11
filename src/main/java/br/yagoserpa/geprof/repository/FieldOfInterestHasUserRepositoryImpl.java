@@ -1,5 +1,6 @@
 package br.yagoserpa.geprof.repository;
 
+import br.yagoserpa.geprof.model.FieldOfInterest;
 import br.yagoserpa.geprof.model.FieldOfInterestHasUser;
 import br.yagoserpa.geprof.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,8 +20,13 @@ public class FieldOfInterestHasUserRepositoryImpl implements FieldOfInterestHasU
     }
 
     @Override
-    public List<User> findById(Integer id) {
+    public List<User> findByFieldId(Integer id) {
         return template.query("SELECT u.user_id, u.name FROM fieldofinterest_has_user fhu, users u WHERE fhu.field_id = ? AND fhu.user_id = u.user_id", User::new, id);
+    }
+
+    @Override
+    public List<FieldOfInterest> findByUserId(Integer id) {
+        return template.query("SELECT f.field_id, f.name FROM fieldofinterest_has_user fhu, fieldofinterest f WHERE fhu.user_id = ? AND fhu.field_id = f.field_id", FieldOfInterest::new, id);
     }
 
     @Override

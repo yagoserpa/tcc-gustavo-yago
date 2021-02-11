@@ -1,12 +1,15 @@
 package br.yagoserpa.geprof.repository;
 
+import br.yagoserpa.geprof.model.FieldOfInterest;
 import br.yagoserpa.geprof.model.User;
 
 import java.util.List;
 
 public interface FieldOfInterestHasUserRepository {
 
-    List<User> findById(Integer id);
+    List<User> findByFieldId(Integer id);
+
+    List<FieldOfInterest> findByUserId(Integer id);
 
     void insert(Integer id, Integer userId);
 

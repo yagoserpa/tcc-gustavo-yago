@@ -1,5 +1,6 @@
 package br.yagoserpa.geprof.controller;
 
+import br.yagoserpa.geprof.model.FieldOfInterest;
 import br.yagoserpa.geprof.model.User;
 import br.yagoserpa.geprof.repository.FieldOfInterestHasUserRepository;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +17,17 @@ public class FieldOfInterestHasUserController {
     }
 
     @GetMapping("/api/v1/field/{id}/users")
-    public List<User> find(
+    public List<User> findByField(
             @PathVariable(value = "id") Integer id
     ) {
-        return fieldOfInterestHasUserRepository.findById(id);
+        return fieldOfInterestHasUserRepository.findByFieldId(id);
+    }
+
+    @GetMapping("/api/v1/user/{id}/fields")
+    public List<FieldOfInterest> findByUser(
+            @PathVariable(value = "id") Integer id
+    ) {
+        return fieldOfInterestHasUserRepository.findByUserId(id);
     }
 
     @PostMapping("/api/v1/field/{id}/user/{userId}")
