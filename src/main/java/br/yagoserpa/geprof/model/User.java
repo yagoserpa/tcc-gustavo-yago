@@ -1,5 +1,6 @@
 package br.yagoserpa.geprof.model;
 
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -27,6 +28,8 @@ public class User {
     private Boolean committee;
     private Boolean coop;
 
+    private Blob signature;
+
     public User() {
     }
 
@@ -51,6 +54,11 @@ public class User {
         try {
             committee = resultSet.getBoolean("committee");
             coop = resultSet.getBoolean("coop");
+        } catch (Exception ignored) {
+        }
+
+        try {
+            signature = resultSet.getBlob("signature");
         } catch (Exception ignored) {
         }
     }
@@ -205,6 +213,14 @@ public class User {
 
     public void setCoop(Boolean coop) {
         this.coop = coop;
+    }
+
+    public Blob getSignature() {
+        return signature;
+    }
+
+    public void setSignature(Blob signature) {
+        this.signature = signature;
     }
 
     public enum Status {
