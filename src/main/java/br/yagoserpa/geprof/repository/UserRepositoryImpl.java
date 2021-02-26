@@ -20,12 +20,20 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findAll() {
-        return template.query("SELECT user_id, name, email, dre, siape, register_date, gender, status, title, position, room, lattes, user_profile, course, origin, user_type FROM users", User::new);
+        return template.query("SELECT user_id, name, password, email, dre, siape, register_date, gender, status, title, position, room, lattes, user_profile, course, origin, user_type FROM users", User::new);
     }
 
     @Override
     public Optional<User> findById(Integer id) {
-        List<User> users = template.query("SELECT user_id, name, email, dre, siape, register_date, gender, status, title, position, room, lattes, user_profile, course, origin, user_type FROM users WHERE user_id = ? LIMIT 1", User::new, id);
+        List<User> users = template.query("SELECT user_id, name, password, email, dre, siape, register_date, gender, status, title, position, room, lattes, user_profile, course, origin, user_type FROM users WHERE user_id = ? LIMIT 1", User::new, id);
+        if (users.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(users.get(0));
+    }
+    @Override
+    public Optional<User> findByEmail(String email) {
+        List<User> users = template.query("SELECT user_id, name, password, email, dre, siape, register_date, gender, status, title, position, room, lattes, user_profile, course, origin, user_type FROM users WHERE email = ? LIMIT 1", User::new, email);
         if (users.isEmpty()) {
             return Optional.empty();
         }

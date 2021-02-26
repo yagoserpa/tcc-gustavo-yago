@@ -1,18 +1,61 @@
 package br.yagoserpa.geprof.controller;
 
+import br.yagoserpa.geprof.model.Credentials;
 import br.yagoserpa.geprof.model.User;
 import br.yagoserpa.geprof.repository.UserRepository;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.security.*;
+import java.math.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 public class UserController {
 
     private final UserRepository userRepository;
+    private final String secret;
 
-    public UserController(UserRepository userRepository) {
+    public UserController(
+            UserRepository userRepository,
+            @Value("${jwtsecret}") String secret
+    ) {
         this.userRepository = userRepository;
+        this.secret = secret;
+    }
+
+    @PostMapping("/api/v1/auth")
+    public ResponseEntity<Map<String, String>> auth(
+            @RequestBody Credentials credentials
+    ) throws NoSuchAlgorithmException {
+        var userOptional = userRepository.findByEmail(credentials.getUsername());
+        //var passwd = credentials.getPassword();
+        //MessageDigest md5 = MessageDigest.getInstance("MD5");
+        //md5.update(passwd.getBytes(),0,passwd.length());
+        //var convertedPasswd = new BigInteger(1,md5.digest()).toString(16);
+
+        if (
+                userOptional.isEmpty() ||
+                        !Objects.equals(userOptional.get().getPassword(), credentials.getPassword()) /* converter pra MD5 */
+        ) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        var user = userOptional.get();
+        var token = Jwts.builder()
+                .claim("id", user.getId())
+                .setExpiration(new Date(new Date().getTime() + 600_000))
+                .signWith(SignatureAlgorithm.HS256, secret.getBytes())
+                .compact();
+
+        return ResponseEntity.ok(Map.of("access_token", token));
     }
 
     @GetMapping("/api/v1/user/{id}")

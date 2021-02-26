@@ -11,6 +11,8 @@ public interface UserRepository {
 
     Optional<User> findById(Integer id);
 
+    Optional<User> findByEmail(String email);
+
     void insert(User user);
 
     void update(Integer id, User user);
