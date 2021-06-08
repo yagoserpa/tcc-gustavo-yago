@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+#pagina nav {
+  background-color: black;
+}
+
+#pagina nav:after {
+  clear: both;
+  content: ' ';
+  display: block;
+}
+
+#pagina nav div {
+  float: left;
+}
+
+#pagina nav div a {
+  float: left;
+  display: block;
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+}
+
+#pagina nav div a:hover {
+  background-color: lightgray;
+  color: black;
+}
+
+#pagina nav .logo {
+  color: white;
+  padding: 10px;
+  font-weight: bolder;
+}
+
+.fancy-form {
+  margin-bottom: 10px;
+}
