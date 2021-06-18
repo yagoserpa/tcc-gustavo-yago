@@ -1,6 +1,6 @@
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import Contador from './components/Contador';
-import Planetas from './components/Planetas';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Contador from "./components/Contador";
+import Planetas from "./components/Planetas";
 
 function App() {
   return (
@@ -31,7 +31,7 @@ function App() {
         </Switch>
       </div>
     </Router>
-  )
+  );
 }
 
 export default App;
