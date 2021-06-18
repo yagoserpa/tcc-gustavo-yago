@@ -1,4 +1,6 @@
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Cabecalho from "./components/Cabecalho";
+import LoginPage from "./pages/LoginPage";
 import Contador from "./components/Contador";
 import Planetas from "./components/Planetas";
 
@@ -6,21 +8,13 @@ function App() {
   return (
     <Router>
       <div id="pagina">
-        <nav>
-          <div className="logo">YAGO</div>
-          <div>
-            <Link to="/">Home</Link>
-          </div>
-          <div>
-            <Link to="/contador">Contador</Link>
-          </div>
-          <div>
-            <Link to="/planetas">Planetas</Link>
-          </div>
-        </nav>
+        <Cabecalho />
         <Switch>
-          <Route path="/" exact>
+          <Route exact path="/">
             Home
+          </Route>
+          <Route path="/login">
+            <LoginPage />
           </Route>
           <Route path="/contador">
             <Contador />
