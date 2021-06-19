@@ -1,10 +1,30 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Button } from "@material-ui/core";
+import { Link, useHistory } from "react-router-dom";
 
 function NavHeader() {
+  const history = useHistory();
+  const token = localStorage.getItem("token");
+
+  function logout() {
+    localStorage.clear();
+    history.push("/");
+  }
+
+  // TODO: mostar so se tiver logado
+  function showLogoutButton() {
+    if (token != null) {
+      return (
+        <Button variant="contained" color="primary" onClick={logout}>
+          Sair
+        </Button>
+      );
+    }
+  }
+
   return (
     <nav>
-      <div className="logo">YAGO PAI</div>
+      <div className="logo">GeProFi</div>
       <div>
         <Link to="/">Home</Link>
       </div>
@@ -14,12 +34,7 @@ function NavHeader() {
       <div>
         <Link to="/public">Área Pública</Link>
       </div>
-      <div>
-        <Link to="/contador">Contador</Link>
-      </div>
-      <div>
-        <Link to="/planetas">Planetas</Link>
-      </div>
+      {showLogoutButton()}
     </nav>
   );
 }

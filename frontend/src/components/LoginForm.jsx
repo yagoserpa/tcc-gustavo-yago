@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { TextField, Button } from "@material-ui/core";
 
-function LoginForm() {
+function LoginForm({ onSubmitClicked }) {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
 
@@ -10,6 +10,7 @@ function LoginForm() {
     <form
       onSubmit={(event) => {
         event.preventDefault();
+        onSubmitClicked(email, pass);
       }}
     >
       <TextField

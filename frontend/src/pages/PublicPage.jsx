@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import { TextField, Button, Container } from "@material-ui/core";
+import FieldOfInterestList from "../components/FieldOfInterestList";
+import { useEffect } from "react";
+import { getFieldOfInterests } from "../service/api";
 
 function PublicPage() {
   const [search, setSearch] = useState();
+  const [fieldOfInterestList, setFieldOfInterestList] = useState([]);
+
+  useEffect(() => {
+    getFieldOfInterests(setFieldOfInterestList);
+  }, [setFieldOfInterestList]);
 
   return (
     <Container>
@@ -26,6 +34,7 @@ function PublicPage() {
           Buscar
         </Button>
       </form>
+      <FieldOfInterestList fieldOfInterests={fieldOfInterestList} />
     </Container>
   );
 }

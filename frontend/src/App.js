@@ -2,8 +2,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import NavHeader from "./components/NavHeader";
 import LoginPage from "./pages/LoginPage";
 import PublicPage from "./pages/PublicPage";
-import Contador from "./components/Contador";
-import Planetas from "./components/Planetas";
+import NotFoundPage from "./pages/NotFoundPage";
+import HomePage from "./pages/HomePage";
+import FieldOfInterestPage from "./pages/FieldOfInterestPage";
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
         <NavHeader />
         <Switch>
           <Route exact path="/">
-            Home
+            <HomePage />
           </Route>
           <Route path="/login">
             <LoginPage />
@@ -20,11 +21,11 @@ function App() {
           <Route path="/public">
             <PublicPage />
           </Route>
-          <Route path="/contador">
-            <Contador />
+          <Route path="/field/:id/users">
+            <FieldOfInterestPage />
           </Route>
-          <Route path="/planetas">
-            <Planetas title="Título" />
+          <Route>
+            <NotFoundPage />
           </Route>
         </Switch>
       </div>
