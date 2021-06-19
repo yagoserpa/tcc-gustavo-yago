@@ -2,9 +2,9 @@ import React from "react";
 import { useState } from "react";
 import { TextField, Button } from "@material-ui/core";
 
-function FormularioLogin() {
+function LoginForm() {
   const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+  const [pass, setPass] = useState("");
 
   return (
     <form
@@ -33,9 +33,9 @@ function FormularioLogin() {
         type="password"
         variant="outlined"
         margin="normal"
-        value={senha}
+        value={pass}
         onChange={(event) => {
-          setSenha(event.target.value);
+          setPass(event.target.value);
         }}
         required
         fullWidth
@@ -47,4 +47,4 @@ function FormularioLogin() {
   );
 }
 
-export default FormularioLogin;
+export default LoginForm;

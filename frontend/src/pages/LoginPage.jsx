@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Typography } from "@material-ui/core";
-import FormularioLogin from "../components/FormularioLogin";
+import LoginForm from "../components/LoginForm";
 
 function LoginPage() {
   return (
@@ -8,7 +8,7 @@ function LoginPage() {
       <Typography variant="h3" component="h1" align="center">
         Login
       </Typography>
-      <FormularioLogin />
+      <LoginForm />
     </Container>
   );
 }

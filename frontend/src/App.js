@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Cabecalho from "./components/Cabecalho";
+import NavHeader from "./components/NavHeader";
 import LoginPage from "./pages/LoginPage";
+import PublicPage from "./pages/PublicPage";
 import Contador from "./components/Contador";
 import Planetas from "./components/Planetas";
 
@@ -8,13 +9,16 @@ function App() {
   return (
     <Router>
       <div id="pagina">
-        <Cabecalho />
+        <NavHeader />
         <Switch>
           <Route exact path="/">
             Home
           </Route>
           <Route path="/login">
             <LoginPage />
+          </Route>
+          <Route path="/public">
+            <PublicPage />
           </Route>
           <Route path="/contador">
             <Contador />

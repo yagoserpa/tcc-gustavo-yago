@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Cabecalho() {
+function NavHeader() {
   return (
     <nav>
       <div className="logo">YAGO PAI</div>
@@ -10,6 +10,9 @@ function Cabecalho() {
       </div>
       <div>
         <Link to="/login">Login</Link>
+      </div>
+      <div>
+        <Link to="/public">Área Pública</Link>
       </div>
       <div>
         <Link to="/contador">Contador</Link>
@@ -21,4 +24,4 @@ function Cabecalho() {
   );
 }
 
-export default Cabecalho;
+export default NavHeader;
