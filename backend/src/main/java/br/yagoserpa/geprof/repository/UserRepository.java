@@ -13,6 +13,8 @@ public interface UserRepository {
 
     Optional<User> findByEmail(String email);
 
+    Optional<User> findByLogin(String email, String password);
+
     void insert(User user);
 
     void update(Integer id, User user);

@@ -44,6 +44,8 @@ public class JWTFilter implements Filter {
 
         if (
             Objects.equals(httpRequest.getRequestURI(), "/api/v1/auth") ||
+            Objects.equals(httpRequest.getRequestURI(), "/api/v1/field") ||
+            Objects.equals(httpRequest.getRequestURI(), "/api/v1/field/1/users") ||
             Objects.equals(httpRequest.getMethod(), "OPTIONS")
         ) {
             filterChain.doFilter(httpRequest, httpResponse);

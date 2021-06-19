@@ -35,16 +35,9 @@ public class UserController {
     public ResponseEntity<Map<String, String>> auth(
             @RequestBody Credentials credentials
     ) throws NoSuchAlgorithmException {
-        var userOptional = userRepository.findByEmail(credentials.getUsername());
-        //var passwd = credentials.getPassword();
-        //MessageDigest md5 = MessageDigest.getInstance("MD5");
-        //md5.update(passwd.getBytes(),0,passwd.length());
-        //var convertedPasswd = new BigInteger(1,md5.digest()).toString(16);
+        var userOptional = userRepository.findByLogin(credentials.getUsername(), credentials.getPassword());
 
-        if (
-                userOptional.isEmpty() ||
-                        !Objects.equals(userOptional.get().getPassword(), credentials.getPassword()) /* converter pra MD5 */
-        ) {
+        if (userOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 

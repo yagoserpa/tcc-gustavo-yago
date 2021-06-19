@@ -36,7 +36,6 @@ public class User {
     public User(ResultSet resultSet, int row) throws SQLException {
         id = resultSet.getInt("user_id");
         name = resultSet.getString("name");
-        password = resultSet.getString("password");
         email = resultSet.getString("email");
         userType = Type.fromValue(resultSet.getInt("user_type"));
         dre = resultSet.getString("dre");
