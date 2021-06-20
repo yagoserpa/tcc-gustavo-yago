@@ -1,40 +1,31 @@
 import React, { useState } from "react";
-import { TextField, Button, Container } from "@material-ui/core";
+import { Container, Typography } from "@material-ui/core";
 import FieldOfInterestList from "../components/FieldOfInterestList";
 import { useEffect } from "react";
 import { getFieldOfInterests } from "../service/api";
 
 function PublicPage() {
-  const [search, setSearch] = useState();
   const [fieldOfInterestList, setFieldOfInterestList] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getFieldOfInterests(setFieldOfInterestList);
-  }, [setFieldOfInterestList]);
+    function onListLoaded(data) {
+      setFieldOfInterestList(data);
+      setLoading(false);
+    }
+
+    getFieldOfInterests(onListLoaded);
+  }, [setFieldOfInterestList, setLoading]);
 
   return (
-    <Container>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-        }}
-      >
-        <TextField
-          id="search"
-          name="search"
-          label="Busca"
-          variant="outlined"
-          margin="normal"
-          value={search}
-          onChange={(event) => {
-            setSearch(event.target.value);
-          }}
-        />
-        <Button variant="contained" color="primary" type="submit">
-          Buscar
-        </Button>
-      </form>
-      <FieldOfInterestList fieldOfInterests={fieldOfInterestList} />
+    <Container component="article">
+      <Typography variant="h3" component="h1" align="center">
+        Buscar Áreas de Interesse
+      </Typography>
+      <FieldOfInterestList
+        fieldOfInterests={fieldOfInterestList}
+        loading={loading}
+      />
     </Container>
   );
 }

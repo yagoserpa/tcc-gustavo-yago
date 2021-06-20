@@ -5,25 +5,23 @@ const api = Axios.create({
   headers: { Accept: "application/json" },
 });
 
-const get = async (url, callback) => {
-  const response = await api.get(url);
-  callback(response.data);
-};
-
 export const login = async (username, password, callback) => {
   const body = { username: username, password: password };
   const response = await api.post("/auth", body);
-  callback(response.data.access_token);
+  callback(response.data);
 };
 
 export const getUser = async (id, callback) => {
-  get(`user/${id}`, callback);
+  const response = await api.get(`user/${id}`);
+  callback(response.data);
 };
 
 export const getFieldOfInterests = async (callback) => {
-  get("/field", callback);
+  const response = await api.get("/field");
+  callback(response.data);
 };
 
 export const getFieldOfInterestUsers = async (id, callback) => {
-  get(`/field/${id}/users`, callback);
+  const response = await api.get(`/field/${id}/users`);
+  callback(response.data);
 };
