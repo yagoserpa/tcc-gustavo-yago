@@ -1,19 +1,42 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
+import { useEffect } from "react";
+import { useState } from "react";
 
-function NavHeader() {
+function NavHeader({ loggedInUser }) {
   const history = useHistory();
-  const token = localStorage.getItem("token");
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    function handleLoggedInUserChanged(newUser) {
+      setUser(newUser);
+    }
+
+    loggedInUser.subscribe(handleLoggedInUserChanged);
+
+    return function cleanup() {
+      loggedInUser.unsubscribe(handleLoggedInUserChanged);
+    };
+  }, [loggedInUser]);
 
   function logout() {
-    localStorage.clear();
+    loggedInUser.clearLoggedInUser();
     history.push("/");
   }
 
-  // TODO: mostar so se tiver logado
+  function showLoginLink() {
+    if (user == null) {
+      return (
+        <div>
+          <Link to="/login">Login</Link>
+        </div>
+      );
+    }
+  }
+
   function showLogoutButton() {
-    if (token != null) {
+    if (user != null) {
       return (
         <Button variant="contained" color="primary" onClick={logout}>
           Sair
@@ -28,9 +51,7 @@ function NavHeader() {
       <div>
         <Link to="/">Home</Link>
       </div>
-      <div>
-        <Link to="/login">Login</Link>
-      </div>
+      {showLoginLink()}
       <div>
         <Link to="/public">Área Pública</Link>
       </div>

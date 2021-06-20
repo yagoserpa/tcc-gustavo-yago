@@ -4,18 +4,21 @@ import { Container, Typography } from "@material-ui/core";
 import LoginForm from "../components/LoginForm";
 import { login } from "../service/api";
 
-function LoginPage() {
+function LoginPage({ loggedInUser }) {
   let history = useHistory();
+
+  if (loggedInUser.user != null) {
+    history.push("/");
+  }
 
   function doLogin(email, password) {
     login(email, password, onLogin).catch(() => {
-      // TODO: mostrar erro de login
       history.push("/404");
     });
   }
 
   function onLogin(token) {
-    localStorage.setItem("token", token);
+    loggedInUser.saveLoggedInUser(token);
     history.push("/");
   }
 

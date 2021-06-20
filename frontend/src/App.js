@@ -5,18 +5,21 @@ import PublicPage from "./pages/PublicPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import HomePage from "./pages/HomePage";
 import FieldOfInterestPage from "./pages/FieldOfInterestPage";
+import LoggedInUser from "./data/user";
 
 function App() {
+  const loggedInUser = new LoggedInUser();
+
   return (
     <Router>
       <div id="pagina">
-        <NavHeader />
+        <NavHeader loggedInUser={loggedInUser} />
         <Switch>
           <Route exact path="/">
-            <HomePage />
+            <HomePage loggedInUser={loggedInUser} />
           </Route>
           <Route path="/login">
-            <LoginPage />
+            <LoginPage loggedInUser={loggedInUser} />
           </Route>
           <Route path="/public">
             <PublicPage />

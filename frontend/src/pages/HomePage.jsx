@@ -1,11 +1,10 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-function HomePage() {
+function HomePage({ loggedInUser }) {
   const history = useHistory();
-  const token = localStorage.getItem("token");
 
-  if (token != null) {
+  if (loggedInUser.user != null) {
     history.push("/public");
   }
 
