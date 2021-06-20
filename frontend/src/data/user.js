@@ -1,6 +1,6 @@
 export default class LoggedInUser {
   constructor() {
-    this.user = localStorage.getItem("user");
+    this.user = localStorage.getItem("@GeProFi:user");
     this._subscribed = [];
   }
 
@@ -19,12 +19,12 @@ export default class LoggedInUser {
 
   saveLoggedInUser(token) {
     this.user = new User(token);
-    localStorage.setItem("user", this.user);
+    localStorage.setItem("@GeProFi:user", this.user);
     this.notify();
   }
 
   clearLoggedInUser() {
-    localStorage.clear();
+    localStorage.removeItem("@GeProFi:user");
     this.user = null;
     this.notify();
   }

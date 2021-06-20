@@ -39,7 +39,7 @@ function UserList({ userList, loading }) {
               <TableCell component="th" scope="row">
                 <Link to={`/user/${user.id}/fields`}>{user.name}</Link>
               </TableCell>
-              <TableCell align="right">{user.user_profile}</TableCell>
+              <TableCell align="right">{user.userProfile}</TableCell>
             </TableRow>
           ))}
           {showLoadingCell()}

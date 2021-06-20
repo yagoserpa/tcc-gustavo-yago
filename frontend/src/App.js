@@ -6,6 +6,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import HomePage from "./pages/HomePage";
 import FieldOfInterestPage from "./pages/FieldOfInterestPage";
 import LoggedInUser from "./data/user";
+import UserPage from "./pages/UserPage";
 
 function App() {
   const loggedInUser = new LoggedInUser();
@@ -26,6 +27,9 @@ function App() {
           </Route>
           <Route path="/field/:id/users">
             <FieldOfInterestPage />
+          </Route>
+          <Route path="/user/:id/fields">
+            <UserPage />
           </Route>
           <Route>
             <NotFoundPage />

@@ -5,7 +5,7 @@ function User({ user }) {
     <>
       <span>{user.name}</span>
       <span>{user.position}</span>
-      <span>{user.user_profile}</span>
+      <span>{user.userProfile}</span>
     </>
   );
 }
