@@ -1,32 +1,22 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
-function NavHeader({ loggedInUser }) {
+function NavHeader() {
+  const { signed, logout } = useAuth();
   const history = useHistory();
-  const [user, setUser] = useState();
 
-  useEffect(() => {
-    function handleLoggedInUserChanged(newUser) {
-      setUser(newUser);
-    }
+  function doLogout() {
+    logout(onLogout);
+  }
 
-    loggedInUser.subscribe(handleLoggedInUserChanged);
-
-    return function cleanup() {
-      loggedInUser.unsubscribe(handleLoggedInUserChanged);
-    };
-  }, [loggedInUser]);
-
-  function logout() {
-    loggedInUser.clearLoggedInUser();
+  function onLogout() {
     history.push("/");
   }
 
   function showLoginLink() {
-    if (user == null) {
+    if (!signed) {
       return (
         <div>
           <Link to="/login">Login</Link>
@@ -36,9 +26,9 @@ function NavHeader({ loggedInUser }) {
   }
 
   function showLogoutButton() {
-    if (user != null) {
+    if (signed) {
       return (
-        <Button variant="contained" color="primary" onClick={logout}>
+        <Button variant="contained" color="primary" onClick={doLogout}>
           Sair
         </Button>
       );

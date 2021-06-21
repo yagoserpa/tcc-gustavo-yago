@@ -1,10 +1,12 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
-function HomePage({ loggedInUser }) {
+function HomePage() {
+  const { signed } = useAuth();
   const history = useHistory();
 
-  if (loggedInUser.user != null) {
+  if (signed) {
     history.push("/public");
   }
 

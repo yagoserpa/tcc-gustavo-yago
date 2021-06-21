@@ -2,12 +2,13 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { Container, Typography } from "@material-ui/core";
 import LoginForm from "../components/LoginForm";
-import { login } from "../service/api";
+import { useAuth } from "../contexts/AuthContext";
 
-function LoginPage({ loggedInUser }) {
+function LoginPage() {
+  const { signed, login } = useAuth();
   let history = useHistory();
 
-  if (loggedInUser.user != null) {
+  if (signed) {
     history.push("/");
   }
 
@@ -18,7 +19,6 @@ function LoginPage({ loggedInUser }) {
   }
 
   function onLogin(token) {
-    loggedInUser.saveLoggedInUser(token);
     history.push("/");
   }
 
