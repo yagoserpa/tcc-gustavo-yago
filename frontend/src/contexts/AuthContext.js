@@ -16,26 +16,28 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const storagedUser = localStorage.getItem("@GeProFi:user");
+    const token = localStorage.getItem("@GeProFi:token");
 
-    if (storagedUser) {
-      setUser(storagedUser);
-      api.defaults.headers.Authorization = `Bearer ${storagedUser.token}`;
+    if (token) {
+      setUser(token);
+      api.defaults.headers.Authorization = `Bearer ${token}`;
     }
   }, []);
 
   async function login(username, password, callback) {
     const body = { username: username, password: password };
     const response = await api.post("/auth", body);
-    setUser(response.data);
-    localStorage.setItem("@GeProFi:user", response.data);
-    api.defaults.headers.Authorization = `Bearer ${response.data.token}`;
+    const token = response.data.access_token;
+    setUser(token);
+    localStorage.setItem("@GeProFi:token", token);
+    api.defaults.headers.Authorization = `Bearer ${token}`;
     callback(response.data);
   }
 
   function logout(callback) {
     setUser(null);
-    localStorage.removeItem("@GeProFi:user");
+    localStorage.removeItem("@GeProFi:token");
+    api.defaults.headers.Authorization = null;
     callback();
   }
 
