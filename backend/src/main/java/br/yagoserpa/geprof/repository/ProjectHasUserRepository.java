@@ -10,7 +10,7 @@ public interface ProjectHasUserRepository {
 
     List<User> findByProjectId(Integer id);
 
-    List<Project> findByUserId(Integer id);
+    List<Project> findByUserId(Long id);
 
     void insert(Integer id, Integer userId, ProjectHasUser projectHasUser);
 

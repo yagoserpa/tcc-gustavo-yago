@@ -13,7 +13,6 @@ public class File {
     private Integer version;
     private String file;
     private Timestamp registerDate;
-    private String contentType;
     private String content;
     private Blob comments;
 
@@ -27,7 +26,6 @@ public class File {
         version = resultSet.getInt("version");
         file = resultSet.getString("file");
         registerDate = resultSet.getTimestamp("register_date");
-        contentType = resultSet.getString("content_type");
         content = resultSet.getString("content");
         comments = resultSet.getBlob("comments");
     }
@@ -78,14 +76,6 @@ public class File {
 
     public void setRegisterDate(Timestamp registerDate) {
         this.registerDate = registerDate;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
     }
 
     public String getContent() {

@@ -7,7 +7,6 @@ import java.sql.Timestamp;
 public class Project {
 
     private Integer id;
-    private String name;
     private String subject;
     private String title;
     private String description;
@@ -20,7 +19,6 @@ public class Project {
 
     public Project(ResultSet resultSet, int row) throws SQLException {
         id = resultSet.getInt("project_id");
-        name = resultSet.getString("name");
         subject = resultSet.getString("subject");
         title = resultSet.getString("title");
         description = resultSet.getString("description");
@@ -35,14 +33,6 @@ public class Project {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getSubject() {

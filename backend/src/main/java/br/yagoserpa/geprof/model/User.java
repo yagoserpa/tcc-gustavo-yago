@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 
 public class User {
 
-    private Integer id;
+    private Long id;
     private String name;
     private String email;
     private String password;
@@ -34,7 +34,7 @@ public class User {
     }
 
     public User(ResultSet resultSet, int row) throws SQLException {
-        id = resultSet.getInt("user_id");
+        id = resultSet.getLong("user_id");
         name = resultSet.getString("name");
         email = resultSet.getString("email");
         userType = Type.fromValue(resultSet.getInt("user_type"));
@@ -71,11 +71,11 @@ public class User {
         this.email = email;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

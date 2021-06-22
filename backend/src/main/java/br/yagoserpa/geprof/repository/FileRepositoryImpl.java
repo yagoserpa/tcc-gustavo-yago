@@ -34,14 +34,13 @@ public class FileRepositoryImpl implements FileRepository {
 
     @Override
     public void insert(File file) {
-        template.query("INSERT INTO file (project_id, name, version, file, register_date, content_type, content, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+        template.query("INSERT INTO file (project_id, name, version, file, register_date, content, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                 File::new,
                 file.getProjectId(),
                 file.getName(),
                 file.getVersion(),
                 file.getFile(),
                 file.getRegisterDate(),
-                file.getContentType(),
                 file.getContent(),
                 file.getComments()
         );
@@ -49,13 +48,12 @@ public class FileRepositoryImpl implements FileRepository {
 
     @Override
     public void update(Integer id, File file) {
-        template.update("UPDATE file SET project_id = ?, name = ?, version = ?, file = ?, register_date = ?, content_type = ?, content = ?, comments = ? WHERE file_id = ?",
+        template.update("UPDATE file SET project_id = ?, name = ?, version = ?, file = ?, register_date = ?, content = ?, comments = ? WHERE file_id = ?",
                 file.getProjectId(),
                 file.getName(),
                 file.getVersion(),
                 file.getFile(),
                 file.getRegisterDate(),
-                file.getContentType(),
                 file.getContent(),
                 file.getComments(),
                 id

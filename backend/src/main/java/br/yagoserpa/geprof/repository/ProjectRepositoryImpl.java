@@ -34,9 +34,8 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
     @Override
     public void insert(Project project) {
-        template.query("INSERT INTO project (name, subject, title, descrption, status, register_date, keywords) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        template.query("INSERT INTO project (subject, title, descrption, status, register_date, keywords) VALUES (?, ?, ?, ?, ?, ?, ?)",
                 Project::new,
-                project.getName(),
                 project.getSubject(),
                 project.getTitle(),
                 project.getDescription(),
@@ -48,8 +47,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
     @Override
     public void update(Integer id, Project project) {
-        template.update("UPDATE project SET name = ?, subject = ?, title = ?, description = ?, register_date = ?, status = ?, keywords = ? WHERE project_id = ?",
-                project.getName(),
+        template.update("UPDATE project SET subject = ?, title = ?, description = ?, register_date = ?, status = ?, keywords = ? WHERE project_id = ?",
                 project.getSubject(),
                 project.getTitle(),
                 project.getDescription(),
