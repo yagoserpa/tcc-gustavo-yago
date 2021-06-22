@@ -20,12 +20,12 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findAll() {
-        return template.query("SELECT user_id, name, email, dre, siape, register_date, gender, status, title, position, room, lattes, user_profile, course, origin, user_type FROM users", User::new);
+        return template.query("SELECT * FROM users", User::new);
     }
 
     @Override
     public Optional<User> findById(Integer id) {
-        List<User> users = template.query("SELECT user_id, name, email, dre, siape, register_date, gender, status, title, position, room, lattes, user_profile, course, origin, user_type FROM users WHERE user_id = ? LIMIT 1", User::new, id);
+        List<User> users = template.query("SELECT * FROM users WHERE user_id = ? LIMIT 1", User::new, id);
         if (users.isEmpty()) {
             return Optional.empty();
         }
@@ -34,7 +34,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        List<User> users = template.query("SELECT user_id, name, email, dre, siape, register_date, gender, status, title, position, room, lattes, user_profile, course, origin, user_type FROM users WHERE email = ? LIMIT 1", User::new, email);
+        List<User> users = template.query("SELECT * FROM users WHERE email = ? LIMIT 1", User::new, email);
         if (users.isEmpty()) {
             return Optional.empty();
         }
@@ -43,7 +43,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findByLogin(String email, String password) {
-        List<User> users = template.query("SELECT user_id, name, email, dre, siape, register_date, gender, status, title, position, room, lattes, user_profile, course, origin, user_type FROM users WHERE email = ? AND password = crypt(?, password) LIMIT 1",
+        List<User> users = template.query("SELECT * FROM users WHERE email = ? AND password = crypt(?, password) LIMIT 1",
                 User::new,
                 email,
                 password);

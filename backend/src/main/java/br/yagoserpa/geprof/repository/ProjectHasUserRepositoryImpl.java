@@ -21,12 +21,12 @@ public class ProjectHasUserRepositoryImpl implements ProjectHasUserRepository {
 
     @Override
     public List<User> findByProjectId(Integer id) {
-        return template.query("SELECT u.user_id, u.name, phu.committee, phu.coop FROM project_has_user phu, users u WHERE phu.project_id = ? AND phu.user_id = u.user_id", User::new, id);
+        return template.query("SELECT u.*, phu.* FROM project_has_user phu, users u WHERE phu.project_id = ? AND phu.user_id = u.user_id", User::new, id);
     }
 
     @Override
-    public List<Project> findByUserId(Integer id) {
-        return template.query("SELECT p.project_id, p.name FROM project_has_user phu, project p WHERE phu.user_id = ? AND phu.project_id = p.project_id", Project::new, id);
+    public List<Project> findByUserId(Long id) {
+        return template.query("SELECT p.* FROM project_has_user phu, project p WHERE phu.user_id = ? AND phu.project_id = p.project_id", Project::new, id);
     }
 
     @Override

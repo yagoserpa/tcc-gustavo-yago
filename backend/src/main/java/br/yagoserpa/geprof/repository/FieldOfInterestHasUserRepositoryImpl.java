@@ -26,7 +26,7 @@ public class FieldOfInterestHasUserRepositoryImpl implements FieldOfInterestHasU
 
     @Override
     public List<FieldOfInterest> findByUserId(Integer id) {
-        return template.query("SELECT f.field_id, f.name FROM fieldofinterest_has_user fhu, fieldofinterest f WHERE fhu.user_id = ? AND fhu.field_id = f.field_id", FieldOfInterest::new, id);
+        return template.query("SELECT f.* FROM fieldofinterest_has_user fhu, fieldofinterest f WHERE fhu.user_id = ? AND fhu.field_id = f.field_id", FieldOfInterest::new, id);
     }
 
     @Override

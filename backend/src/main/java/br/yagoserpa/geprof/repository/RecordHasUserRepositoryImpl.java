@@ -20,7 +20,7 @@ public class RecordHasUserRepositoryImpl implements RecordHasUserRepository {
 
     @Override
     public List<User> findById(Integer id) {
-        return template.query("SELECT u.user_id, u.name, phu.committee, phu.coop, rhu.signature FROM record_has_user rhu, project_has_user phu, users u WHERE rhu.record_id = ? AND rhu.project_id = phu.project_id AND rhu.user_id = phu.user_id AND phu.user_id = u.user_id", User::new, id);
+        return template.query("SELECT u.*, phu.*, rhu.* FROM record_has_user rhu, project_has_user phu, users u WHERE rhu.record_id = ? AND rhu.project_id = phu.project_id AND rhu.user_id = phu.user_id AND phu.user_id = u.user_id", User::new, id);
     }
 
     @Override
