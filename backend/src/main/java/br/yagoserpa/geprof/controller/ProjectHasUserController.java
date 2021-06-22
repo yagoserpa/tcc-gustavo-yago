@@ -1,11 +1,13 @@
 package br.yagoserpa.geprof.controller;
 
+import br.yagoserpa.geprof.model.Auth;
 import br.yagoserpa.geprof.model.Project;
 import br.yagoserpa.geprof.model.ProjectHasUser;
 import br.yagoserpa.geprof.model.User;
 import br.yagoserpa.geprof.repository.ProjectHasUserRepository;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletRequest;
 import java.util.List;
 
 @RestController
@@ -24,11 +26,12 @@ public class ProjectHasUserController {
         return projectHasUserRepository.findByProjectId(id);
     }
 
-    @GetMapping("/api/v1/user/{id}/projects")
+    @GetMapping("/api/v1/user/projects")
     public List<Project> findByUser(
-            @PathVariable(value = "id") Integer id
+            ServletRequest request
     ) {
-        return projectHasUserRepository.findByUserId(id);
+        Auth auth = (Auth) request.getAttribute("auth");
+        return projectHasUserRepository.findByUserId(auth.getId());
     }
 
     @PostMapping("/api/v1/project/{id}/user/{userId}")

@@ -44,7 +44,7 @@ public class UserController {
         var user = userOptional.get();
         var token = Jwts.builder()
                 .claim("id", user.getId())
-                .setExpiration(new Date(new Date().getTime() + 600_000))
+                //.setExpiration(new Date(new Date().getTime() + 600_000))// TODO: expirar o token
                 .signWith(SignatureAlgorithm.HS256, secret.getBytes())
                 .compact();
 

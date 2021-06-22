@@ -44,8 +44,9 @@ public class JWTFilter implements Filter {
 
         if (
             Objects.equals(httpRequest.getRequestURI(), "/api/v1/auth") ||
-            httpRequest.getRequestURI().startsWith("/api/v1/field") ||
-            httpRequest.getRequestURI().startsWith("/api/v1/user") ||
+                    // TODO: fazer area publica taokei
+            //httpRequest.getRequestURI().startsWith("/api/v1/field") ||
+            //httpRequest.getRequestURI().startsWith("/api/v1/user") ||
             Objects.equals(httpRequest.getMethod(), "OPTIONS")
         ) {
             filterChain.doFilter(httpRequest, httpResponse);
