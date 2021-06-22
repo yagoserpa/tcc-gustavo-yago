@@ -1,16 +1,11 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import SignedInHomePage from "./SignedInHomePage";
 
 function HomePage() {
   const { signed } = useAuth();
-  const history = useHistory();
 
-  if (signed) {
-    history.push("/public");
-  }
-
-  return <p>Home</p>;
+  return <>{signed ? <SignedInHomePage /> : <p>Home</p>}</>;
 }
 
 export default HomePage;

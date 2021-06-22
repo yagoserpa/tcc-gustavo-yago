@@ -1,5 +1,4 @@
 import React from "react";
-import { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
 import { api } from "../service/api";
@@ -13,31 +12,21 @@ export function useAuth() {
 const AuthContext = React.createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(localStorage.getItem("@GeProFi:token"));
 
-  useEffect(() => {
-    const token = localStorage.getItem("@GeProFi:token");
-
-    if (token) {
-      setUser(token);
-      api.defaults.headers.Authorization = `Bearer ${token}`;
-    }
-  }, []);
-
-  async function login(username, password, callback) {
+  async function login(username, password) {
     const body = { username: username, password: password };
     const response = await api.post("/auth", body);
     const token = response.data.access_token;
-    setUser(token);
-    localStorage.setItem("@GeProFi:token", token);
     api.defaults.headers.Authorization = `Bearer ${token}`;
-    callback(response.data);
+    localStorage.setItem("@GeProFi:token", token);
+    setUser(token);
   }
 
   function logout(callback) {
-    setUser(null);
-    localStorage.removeItem("@GeProFi:token");
     api.defaults.headers.Authorization = null;
+    localStorage.removeItem("@GeProFi:token");
+    setUser(null);
     callback();
   }
 

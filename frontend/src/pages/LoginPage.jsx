@@ -13,13 +13,9 @@ function LoginPage() {
   }
 
   function doLogin(email, password) {
-    login(email, password, onLogin).catch(() => {
+    login(email, password).catch(() => {
       history.push("/404");
     });
-  }
-
-  function onLogin(token) {
-    history.push("/");
   }
 
   return (

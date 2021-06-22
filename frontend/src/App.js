@@ -7,6 +7,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import HomePage from "./pages/HomePage";
 import FieldOfInterestPage from "./pages/FieldOfInterestPage";
 import UserPage from "./pages/UserPage";
+import ProjectPage from "./pages/ProjectPage";
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
             </Route>
             <Route path="/user/:id/fields">
               <UserPage />
+            </Route>
+            <Route path="/project/:id">
+              <ProjectPage />
             </Route>
             <Route>
               <NotFoundPage />
