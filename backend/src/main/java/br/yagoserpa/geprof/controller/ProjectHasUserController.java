@@ -26,8 +26,15 @@ public class ProjectHasUserController {
         return projectHasUserRepository.findByProjectId(id);
     }
 
+    @GetMapping("/api/v1/user/{id}/projects")
+    public List<Project> findByUserId(
+            @PathVariable(value = "id") Long id
+    ) {
+        return projectHasUserRepository.findByUserId(id);
+    }
+
     @GetMapping("/api/v1/user/projects")
-    public List<Project> findByUser(
+    public List<Project> findByAuthUserId(
             ServletRequest request
     ) {
         Auth auth = (Auth) request.getAttribute("auth");
