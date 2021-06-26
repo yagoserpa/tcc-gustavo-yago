@@ -17,23 +17,3 @@ export const apiPost = async (url, body, callback) => {
   const resposta = await api.post(url, body);
   callback(resposta.data);
 };
-
-export const getUser = async (id, callback) => {
-  const response = await api.get(`user/${id}`);
-  callback(response.data);
-};
-
-export const getFieldOfInterests = async (callback) => {
-  const response = await api.get("/field");
-  callback(response.data);
-};
-
-export const getFieldOfInterestUsers = async (id, callback) => {
-  const response = await api.get(`/field/${id}/users`);
-  callback(response.data);
-};
-
-export const getProjectsFromUser = async (callback) => {
-  const response = await api.get("user/projects");
-  callback(response.data);
-};

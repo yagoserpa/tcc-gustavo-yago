@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
 import { Container, Typography } from "@material-ui/core";
 import UserList from "../components/UserList";
-import { getFieldOfInterestUsers } from "../service/api";
+import { apiGet } from "../service/api";
 
 function FieldOfInterestPage() {
   let history = useHistory();
@@ -17,7 +17,7 @@ function FieldOfInterestPage() {
       setLoading(false);
     }
 
-    getFieldOfInterestUsers(id, onListLoaded).catch(() => {
+    apiGet(`/field/${id}/users`, onListLoaded).catch(() => {
       history.push("/404");
     });
   }, [id, setFieldOfInterestUserList, setLoading, history]);

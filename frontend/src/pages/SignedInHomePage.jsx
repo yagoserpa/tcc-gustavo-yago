@@ -10,9 +10,11 @@ import {
   TableHead,
   LinearProgress,
 } from "@material-ui/core";
-import { getProjectsFromUser } from "../service/api";
+import { apiGet } from "../service/api";
+import { useAuth } from "../contexts/AuthContext";
 
 function SignedInHomePage() {
+  const { user } = useAuth();
   const [projectsList, setProjectsList] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -22,7 +24,7 @@ function SignedInHomePage() {
       setLoading(false);
     }
 
-    getProjectsFromUser(onListLoaded);
+    apiGet("user/projects", onListLoaded);
   }, [setProjectsList, setLoading]);
 
   function showLoadingCell() {
@@ -43,7 +45,7 @@ function SignedInHomePage() {
         <TableHead>
           <TableRow>
             <TableCell>Nome</TableCell>
-            <TableCell align="right">Página pessoal</TableCell>
+            <TableCell align="right">Página pessoal {user.userType}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
