@@ -1,6 +1,7 @@
 package br.yagoserpa.geprof.controller;
 
 import br.yagoserpa.geprof.model.Credentials;
+import br.yagoserpa.geprof.model.LoginResponse;
 import br.yagoserpa.geprof.model.User;
 import br.yagoserpa.geprof.repository.UserRepository;
 import io.jsonwebtoken.Jwts;
@@ -32,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping("/api/v1/auth")
-    public ResponseEntity<Map<String, String>> auth(
+    public ResponseEntity<LoginResponse> auth(
             @RequestBody Credentials credentials
     ) throws NoSuchAlgorithmException {
         var userOptional = userRepository.findByLogin(credentials.getUsername(), credentials.getPassword());
@@ -48,7 +49,8 @@ public class UserController {
                 .signWith(SignatureAlgorithm.HS256, secret.getBytes())
                 .compact();
 
-        return ResponseEntity.ok(Map.of("access_token", token));
+//        return ResponseEntity.ok(Map.of("access_token", token));
+        return ResponseEntity.ok(new LoginResponse(token, user));
     }
 
     @GetMapping("/api/v1/user/{id}")
