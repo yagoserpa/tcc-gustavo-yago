@@ -2,6 +2,7 @@ package br.yagoserpa.geprof.controller;
 
 import br.yagoserpa.geprof.model.Project;
 import br.yagoserpa.geprof.repository.ProjectRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,11 +36,13 @@ public class ProjectController {
     }
 
     @PutMapping("/api/v1/project/{id}")
-    public void update(
+    public ResponseEntity<Void> update(
             @PathVariable(value = "id") Integer id,
             @RequestBody Project project
     ) {
         projectRepository.update(id, project);
+
+        return ResponseEntity.ok().build();
     }
 
 }
