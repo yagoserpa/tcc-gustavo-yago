@@ -9,13 +9,13 @@ public interface UserRepository {
 
     List<User> findAll();
 
-    Optional<User> findById(Integer id);
+    Optional<User> findById(Long id);
 
     Optional<User> findByEmail(String email);
 
     Optional<User> findByLogin(String email, String password);
 
-    void insert(User user);
+    Optional<User> insert(User user);
 
     void update(Integer id, User user);
 

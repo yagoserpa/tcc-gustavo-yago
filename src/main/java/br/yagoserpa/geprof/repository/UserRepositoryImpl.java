@@ -24,7 +24,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findById(Integer id) {
+    public Optional<User> findById(Long id) {
         List<User> users = template.query("SELECT * FROM users WHERE user_id = ? LIMIT 1", User::new, id);
         if (users.isEmpty()) {
             return Optional.empty();
@@ -54,11 +54,10 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void insert(User user) {
-        template.query("INSERT INTO users (name, password, email, dre, siape, gender, status, title, position, room, lattes, user_profile, course, origin, user_type) VALUES (?, crypt(?, gen_salt('bf')), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    public Optional<User> insert(User user) {
+        List<User> users = template.query("INSERT INTO users (name, email, dre, siape, gender, status, title, position, room, lattes, user_profile, course, origin, user_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING *",
                 User::new,
                 user.getName(),
-                user.getPassword(),
                 user.getEmail(),
                 user.getDre(),
                 user.getSiape(),
@@ -73,13 +72,18 @@ public class UserRepositoryImpl implements UserRepository {
                 user.getOrigin(),
                 user.getUserType().ordinal()
         );
+        if (users.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(users.get(0));
     }
 
     @Override
     public void update(Integer id, User user) {
-        template.update("UPDATE users SET name = ?, email = ?, dre = ?, siape = ?, gender = ?, status = ?, title = ?, position = ?, room = ?, lattes = ?, user_profile = ?, course = ?, origin = ?, user_type = ? WHERE user_id = ?",
+        template.update("UPDATE users SET name = ?, email = ?, password = crypt(?, gen_salt('bf')), dre = ?, siape = ?, gender = ?, status = ?, title = ?, position = ?, room = ?, lattes = ?, user_profile = ?, course = ?, origin = ?, user_type = ? WHERE user_id = ?",
                 user.getName(),
                 user.getEmail(),
+                user.getPassword(),
                 user.getDre(),
                 user.getSiape(),
                 user.getGender(),

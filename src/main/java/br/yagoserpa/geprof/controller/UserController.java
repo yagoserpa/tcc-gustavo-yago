@@ -2,33 +2,43 @@ package br.yagoserpa.geprof.controller;
 
 import br.yagoserpa.geprof.model.Credentials;
 import br.yagoserpa.geprof.model.LoginResponse;
+import br.yagoserpa.geprof.model.RegisterToken;
 import br.yagoserpa.geprof.model.User;
+import br.yagoserpa.geprof.repository.RegisterTokenRepository;
 import br.yagoserpa.geprof.repository.UserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
+
 import java.security.*;
 import java.math.*;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @RestController
 public class UserController {
 
     private final UserRepository userRepository;
+    private final RegisterTokenRepository registerTokenRepository;
     private final String secret;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     public UserController(
             UserRepository userRepository,
+            RegisterTokenRepository registerTokenRepository,
             @Value("${jwtsecret}") String secret
     ) {
         this.userRepository = userRepository;
+        this.registerTokenRepository = registerTokenRepository;
         this.secret = secret;
     }
 
@@ -55,29 +65,77 @@ public class UserController {
 
     @GetMapping("/api/v1/user/{id}")
     public User find(
-            @PathVariable(value = "id") Integer id
+            @PathVariable(value = "id") Long id
     ) {
         return userRepository.findById(id).orElse(null);
     }
 
     @GetMapping("/api/v1/user")
-    public List<User> all() {
-        return userRepository.findAll();
+    public ResponseEntity<List<User>> all(@RequestParam(name = "token") Optional<String> tokenOptional) {
+        if (tokenOptional.isEmpty()) {
+            return ResponseEntity.ok(userRepository.findAll());
+        } else {
+            var token = tokenOptional.get();
+            var savedTokenOptional = registerTokenRepository.findByToken(token);
+
+            if (savedTokenOptional.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+
+            var savedToken = savedTokenOptional.get();
+
+            var userOptional = userRepository.findById(savedToken.getUserId());
+
+            if (userOptional.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+
+            var user = userOptional.get();
+
+            return ResponseEntity.ok(List.of(user));
+        }
     }
 
-    @PostMapping("/api/v1/user/")
-    public void insert(
+    @PostMapping("/api/v1/user")
+    public ResponseEntity<Void> insert(
             @RequestBody User user
     ) {
-        userRepository.insert(user);
+        user.setStatus(User.Status.ACTIVE);
+        if (user.getUserType() == User.Type.STUDENT) {
+            user.setOrigin("Universidade Federal do Rio de Janeiro");
+        }
+
+        var userOptional = userRepository.insert(user);
+
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        var insertedUser = userOptional.get();
+        String registerToken = UUID.randomUUID().toString();
+
+        registerTokenRepository.insert(new RegisterToken(insertedUser.getId(), registerToken));
+
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(user.getEmail());
+        mail.setSubject("Confirmação de acesso ao GeProFi");
+        mail.setText("Bem-vindo à plataforma de Gerenciamento de Projetos Finais. " +
+                "Para finalizar seu cadastro, clique aqui: http://geprofi-front.herokuapp.com/register?token=" +
+                registerToken);
+
+        javaMailSender.send(mail);
+
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/api/v1/user/{id}")
-    public void update(
+    public ResponseEntity<Void> update(
             @PathVariable(value = "id") Integer id,
             @RequestBody User user
     ) {
         userRepository.update(id, user);
+
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/api/v1/user/{id}")
