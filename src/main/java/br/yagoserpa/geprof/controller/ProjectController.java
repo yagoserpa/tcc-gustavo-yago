@@ -1,6 +1,7 @@
 package br.yagoserpa.geprof.controller;
 
 import br.yagoserpa.geprof.model.Project;
+import br.yagoserpa.geprof.repository.ProjectHasUserRepository;
 import br.yagoserpa.geprof.repository.ProjectRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +12,11 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectRepository projectRepository;
+    private final ProjectHasUserRepository projectHasUserRepository;
 
-    public ProjectController(ProjectRepository projectRepository) {
+    public ProjectController(ProjectRepository projectRepository, ProjectHasUserRepository projectHasUserRepository) {
         this.projectRepository = projectRepository;
+        this.projectHasUserRepository = projectHasUserRepository;
     }
 
     @GetMapping("/api/v1/project/{id}")
@@ -23,8 +26,27 @@ public class ProjectController {
         return projectRepository.findById(id).orElse(null);
     }
 
+    @GetMapping("/api/v1/public/project/{id}")
+    public Project publicFind(
+            @PathVariable(value = "id") Integer id
+    ) {
+        var project = projectRepository.findById(id).orElse(null);
+
+        if (project != null) {
+            var users = projectHasUserRepository.findByProjectId(id);
+            project.setUserList(users);
+        }
+
+        return project;
+    }
+
     @GetMapping("/api/v1/project")
     public List<Project> all() {
+        return projectRepository.findAll();
+    }
+
+    @GetMapping("/api/v1/public/project")
+    public List<Project> publicAll() {
         return projectRepository.findAll();
     }
 

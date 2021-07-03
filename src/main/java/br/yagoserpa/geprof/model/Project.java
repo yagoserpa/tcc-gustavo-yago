@@ -3,6 +3,7 @@ package br.yagoserpa.geprof.model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Project {
 
@@ -13,6 +14,8 @@ public class Project {
     private Status status;
     private Timestamp registerDate;
     private String keywords;
+
+    private List<User> userList;
 
     public Project() {
     }
@@ -81,6 +84,14 @@ public class Project {
 
     public void setKeywords(String keywords) {
         this.keywords = keywords;
+    }
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 
     public enum Status {
