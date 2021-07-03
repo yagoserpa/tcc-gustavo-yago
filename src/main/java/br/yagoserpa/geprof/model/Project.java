@@ -86,7 +86,8 @@ public class Project {
     public enum Status {
         STARTED,
         IN_PROGRESS,
-        ENDED;
+        ENDED,
+        CANCELED;
 
         public static Status fromValue(int ordinal) {
             for (Status b : Status.values()) {

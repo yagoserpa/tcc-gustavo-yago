@@ -37,3 +37,7 @@ NOT DEFERRABLE;
 ALTER TABLE public.users ALTER COLUMN origin DROP DEFAULT;
 
 ALTER TABLE "Register_Token" RENAME TO register_token;
+
+ALTER TABLE users ADD CONSTRAINT email_unique UNIQUE (email);
+ALTER TABLE users ADD CONSTRAINT dre_unique UNIQUE (dre);
+ALTER TABLE users ADD CONSTRAINT siape_unique UNIQUE (siape);
