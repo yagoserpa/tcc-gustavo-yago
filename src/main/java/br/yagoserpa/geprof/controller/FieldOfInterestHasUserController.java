@@ -23,6 +23,13 @@ public class FieldOfInterestHasUserController {
         return fieldOfInterestHasUserRepository.findByFieldId(id);
     }
 
+    @GetMapping("/api/v1/public/field/{id}/users")
+    public List<User> publicFindByField(
+            @PathVariable(value = "id") Integer id
+    ) {
+        return fieldOfInterestHasUserRepository.findByFieldId(id);
+    }
+
     @GetMapping("/api/v1/user/{id}/fields")
     public List<FieldOfInterest> findByUser(
             @PathVariable(value = "id") Integer id

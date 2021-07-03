@@ -70,6 +70,13 @@ public class UserController {
         return userRepository.findById(id).orElse(null);
     }
 
+    @GetMapping("/api/v1/public/user/{id}")
+    public User publicFind(
+            @PathVariable(value = "id") Long id
+    ) {
+        return userRepository.findById(id).orElse(null);
+    }
+
     @GetMapping("/api/v1/user")
     public ResponseEntity<List<User>> all(@RequestParam(name = "token") Optional<String> tokenOptional) {
         if (tokenOptional.isEmpty()) {

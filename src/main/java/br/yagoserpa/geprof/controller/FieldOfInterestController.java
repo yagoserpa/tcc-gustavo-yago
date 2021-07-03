@@ -27,6 +27,11 @@ public class FieldOfInterestController {
         return fieldOfInterestRepository.findAll();
     }
 
+    @GetMapping("/api/v1/public/field")
+    public List<FieldOfInterest> publicAll() {
+        return fieldOfInterestRepository.findAll();
+    }
+
     @PostMapping("/api/v1/field/")
     public void insert(
             @RequestBody FieldOfInterest fieldOfInterest
