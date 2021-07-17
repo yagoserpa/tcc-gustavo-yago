@@ -1,11 +1,17 @@
 package br.yagoserpa.geprof.controller;
 
+import br.yagoserpa.geprof.model.Auth;
 import br.yagoserpa.geprof.model.Project;
+import br.yagoserpa.geprof.model.ProjectHasUser;
 import br.yagoserpa.geprof.repository.ProjectHasUserRepository;
 import br.yagoserpa.geprof.repository.ProjectRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletRequest;
 import java.util.List;
 
 @RestController
@@ -51,10 +57,32 @@ public class ProjectController {
     }
 
     @PostMapping("/api/v1/project/")
-    public void insert(
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public ResponseEntity<Integer> insert(
+            ServletRequest request,
             @RequestBody Project project
     ) {
-        projectRepository.insert(project);
+        project.setStatus(Project.Status.STARTED);
+
+        var projectOptional = projectRepository.insert(project);
+
+        if (projectOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        Auth auth = (Auth) request.getAttribute("auth");
+
+        var insertedProject = projectOptional.get();
+
+        var projectHasUser = new ProjectHasUser();
+        projectHasUser.setId(insertedProject.getId());
+        projectHasUser.setUserId(auth.getId());
+        projectHasUser.setCommittee(false);
+        projectHasUser.setCoop(false);
+
+        projectHasUserRepository.insert(projectHasUser);
+
+        return new ResponseEntity<>(insertedProject.getId(), HttpStatus.OK);
     }
 
     @PutMapping("/api/v1/project/{id}")

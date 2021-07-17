@@ -6,7 +6,7 @@ import java.sql.SQLException;
 public class ProjectHasUser {
 
     private Integer id;
-    private Integer userId;
+    private Long userId;
     private Boolean committee;
     private Boolean coop;
 
@@ -15,7 +15,7 @@ public class ProjectHasUser {
 
     public ProjectHasUser(ResultSet resultSet, int row) throws SQLException {
         id = resultSet.getInt("project_id");
-        userId = resultSet.getInt("user_id");
+        userId = resultSet.getLong("user_id");
         committee = resultSet.getBoolean("committee");
         coop = resultSet.getBoolean("coop");
     }
@@ -28,11 +28,11 @@ public class ProjectHasUser {
         this.id = id;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

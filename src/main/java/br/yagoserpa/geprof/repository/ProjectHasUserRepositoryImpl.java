@@ -30,11 +30,10 @@ public class ProjectHasUserRepositoryImpl implements ProjectHasUserRepository {
     }
 
     @Override
-    public void insert(Integer id, Integer userId, ProjectHasUser projectHasUser) {
-        template.query("INSERT INTO project_has_user (field_id, user_id, committee, coop) VALUES (?, ?, ?, ?)",
-                ProjectHasUser::new,
-                id,
-                userId,
+    public void insert(ProjectHasUser projectHasUser) {
+        template.update("INSERT INTO project_has_user (project_id, user_id, committee, coop) VALUES (?, ?, ?, ?)",
+                projectHasUser.getId(),
+                projectHasUser.getUserId(),
                 projectHasUser.getCommittee(),
                 projectHasUser.getCoop()
         );

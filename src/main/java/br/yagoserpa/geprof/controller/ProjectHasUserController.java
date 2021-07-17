@@ -44,10 +44,12 @@ public class ProjectHasUserController {
     @PostMapping("/api/v1/project/{id}/user/{userId}")
     public void insert(
             @PathVariable(value = "id") Integer id,
-            @PathVariable(value = "userId") Integer userId,
+            @PathVariable(value = "userId") Long userId,
             @RequestBody ProjectHasUser projectHasUser
     ) {
-        projectHasUserRepository.insert(id, userId, projectHasUser);
+        projectHasUser.setId(id);
+        projectHasUser.setUserId(userId);
+        projectHasUserRepository.insert(projectHasUser);
     }
 
     @DeleteMapping("/api/v1/project/{id}/user/{userId}")

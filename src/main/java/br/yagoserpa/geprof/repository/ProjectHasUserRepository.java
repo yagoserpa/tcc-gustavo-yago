@@ -12,7 +12,7 @@ public interface ProjectHasUserRepository {
 
     List<Project> findByUserId(Long id);
 
-    void insert(Integer id, Integer userId, ProjectHasUser projectHasUser);
+    void insert(ProjectHasUser projectHasUser);
 
     void delete(Integer id, Integer userId);
 

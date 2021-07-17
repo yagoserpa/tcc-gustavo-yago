@@ -11,7 +11,7 @@ public interface ProjectRepository {
 
     Optional<Project> findById(Integer id);
 
-    void insert(Project record);
+    Optional<Project> insert(Project record);
 
     void update(Integer id, Project record);
 

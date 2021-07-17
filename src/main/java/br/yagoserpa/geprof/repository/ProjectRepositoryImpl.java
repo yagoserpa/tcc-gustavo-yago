@@ -33,16 +33,19 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
 
     @Override
-    public void insert(Project project) {
-        template.query("INSERT INTO project (subject, title, descrption, status, register_date, keywords) VALUES (?, ?, ?, ?, ?, ?, ?)",
+    public Optional<Project> insert(Project project) {
+        List<Project> projects = template.query("INSERT INTO project (subject, title, description, status, keywords) VALUES (?, ?, ?, ?, ?) RETURNING *",
                 Project::new,
                 project.getSubject(),
                 project.getTitle(),
                 project.getDescription(),
                 project.getStatus().ordinal(),
-                project.getRegisterDate(),
                 project.getKeywords()
         );
+        if (projects.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(projects.get(0));
     }
 
     @Override
