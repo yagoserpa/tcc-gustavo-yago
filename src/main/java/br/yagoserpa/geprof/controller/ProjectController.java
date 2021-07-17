@@ -29,7 +29,14 @@ public class ProjectController {
     public Project find(
             @PathVariable(value = "id") Integer id
     ) {
-        return projectRepository.findById(id).orElse(null);
+        var project = projectRepository.findById(id).orElse(null);
+
+        if (project != null) {
+            var users = projectHasUserRepository.findByProjectId(id);
+            project.setUserList(users);
+        }
+
+        return project;
     }
 
     @GetMapping("/api/v1/public/project/{id}")
