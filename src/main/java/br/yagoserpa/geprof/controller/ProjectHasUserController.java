@@ -5,6 +5,7 @@ import br.yagoserpa.geprof.model.Project;
 import br.yagoserpa.geprof.model.ProjectHasUser;
 import br.yagoserpa.geprof.model.User;
 import br.yagoserpa.geprof.repository.ProjectHasUserRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
@@ -42,7 +43,7 @@ public class ProjectHasUserController {
     }
 
     @PostMapping("/api/v1/project/{id}/user/{userId}")
-    public void insert(
+    public ResponseEntity<Void> insert(
             @PathVariable(value = "id") Integer id,
             @PathVariable(value = "userId") Long userId,
             @RequestBody ProjectHasUser projectHasUser
@@ -50,14 +51,18 @@ public class ProjectHasUserController {
         projectHasUser.setId(id);
         projectHasUser.setUserId(userId);
         projectHasUserRepository.insert(projectHasUser);
+
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/api/v1/project/{id}/user/{userId}")
-    public void delete(
+    public ResponseEntity<Void> delete(
             @PathVariable(value = "id") Integer id,
             @PathVariable(value = "userId") Integer userId
     ) {
         projectHasUserRepository.delete(id, userId);
+
+        return ResponseEntity.ok().build();
     }
 
 }
