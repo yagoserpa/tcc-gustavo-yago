@@ -200,7 +200,7 @@ public class User {
     }
 
     public Boolean getCommittee() {
-        return committee;
+        return committee == null ? false : committee;
     }
 
     public void setCommittee(Boolean committee) {
@@ -208,7 +208,7 @@ public class User {
     }
 
     public Boolean getCoop() {
-        return coop;
+        return coop == null? false : coop;
     }
 
     public void setCoop(Boolean coop) {
