@@ -11,7 +11,7 @@ public interface FieldOfInterestRepository {
 
     Optional<FieldOfInterest> findById(Integer id);
 
-    void insert(FieldOfInterest fieldOfInterest);
+    FieldOfInterest insert(FieldOfInterest fieldOfInterest);
 
     void update(Integer id, FieldOfInterest fieldOfInterest);
 

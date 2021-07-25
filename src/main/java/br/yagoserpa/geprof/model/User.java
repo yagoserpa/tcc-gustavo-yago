@@ -4,6 +4,7 @@ import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
 
 public class User {
 
@@ -30,6 +31,8 @@ public class User {
     private Boolean coop;
 
     private Blob signature;
+
+    private List<FieldOfInterest> fieldOfInterestList;
 
     public User() {
     }
@@ -230,6 +233,14 @@ public class User {
 
     public void setSignature(Blob signature) {
         this.signature = signature;
+    }
+
+    public List<FieldOfInterest> getFieldOfInterestList() {
+        return fieldOfInterestList;
+    }
+
+    public void setFieldOfInterestList(List<FieldOfInterest> fieldOfInterestList) {
+        this.fieldOfInterestList = fieldOfInterestList;
     }
 
     public enum Status {

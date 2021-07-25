@@ -33,12 +33,13 @@ public class FieldOfInterestRepositoryImpl implements FieldOfInterestRepository 
     }
 
     @Override
-    public void insert(FieldOfInterest fieldOfInterest) {
-        template.query("INSERT INTO fieldofinterest (name, description) VALUES (?, ?)",
+    public FieldOfInterest insert(FieldOfInterest fieldOfInterest) {
+        List<FieldOfInterest> fieldOfInterests = template.query("INSERT INTO fieldofinterest (name, description) VALUES (?, ?) RETURNING *",
                 FieldOfInterest::new,
                 fieldOfInterest.getName(),
                 fieldOfInterest.getDescription()
         );
+        return fieldOfInterests.get(0);
     }
 
     @Override

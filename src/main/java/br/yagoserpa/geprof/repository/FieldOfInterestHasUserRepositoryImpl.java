@@ -25,14 +25,13 @@ public class FieldOfInterestHasUserRepositoryImpl implements FieldOfInterestHasU
     }
 
     @Override
-    public List<FieldOfInterest> findByUserId(Integer id) {
+    public List<FieldOfInterest> findByUserId(Long id) {
         return template.query("SELECT f.* FROM fieldofinterest_has_user fhu, fieldofinterest f WHERE fhu.user_id = ? AND fhu.field_id = f.field_id", FieldOfInterest::new, id);
     }
 
     @Override
     public void insert(Integer id, Integer userId) {
-        template.query("INSERT INTO fieldofinterest_has_user (field_id, user_id) VALUES (?, ?)",
-                FieldOfInterestHasUser::new,
+        template.update("INSERT INTO fieldofinterest_has_user (field_id, user_id) VALUES (?, ?)",
                 id,
                 userId
         );

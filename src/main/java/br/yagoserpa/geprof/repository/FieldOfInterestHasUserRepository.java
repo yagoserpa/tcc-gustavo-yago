@@ -9,7 +9,7 @@ public interface FieldOfInterestHasUserRepository {
 
     List<User> findByFieldId(Integer id);
 
-    List<FieldOfInterest> findByUserId(Integer id);
+    List<FieldOfInterest> findByUserId(Long id);
 
     void insert(Integer id, Integer userId);
 

@@ -4,6 +4,8 @@ import br.yagoserpa.geprof.model.Credentials;
 import br.yagoserpa.geprof.model.LoginResponse;
 import br.yagoserpa.geprof.model.RegisterToken;
 import br.yagoserpa.geprof.model.User;
+import br.yagoserpa.geprof.repository.FieldOfInterestHasUserRepository;
+import br.yagoserpa.geprof.repository.ProjectHasUserRepository;
 import br.yagoserpa.geprof.repository.RegisterTokenRepository;
 import br.yagoserpa.geprof.repository.UserRepository;
 import io.jsonwebtoken.Jwts;
@@ -25,6 +27,7 @@ import java.util.UUID;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final FieldOfInterestHasUserRepository fieldOfInterestHasUserRepository;
     private final RegisterTokenRepository registerTokenRepository;
     private final String secret;
 
@@ -34,10 +37,12 @@ public class UserController {
     public UserController(
             UserRepository userRepository,
             RegisterTokenRepository registerTokenRepository,
+            FieldOfInterestHasUserRepository fieldOfInterestHasUserRepository,
             @Value("${jwtsecret}") String secret
     ) {
         this.userRepository = userRepository;
         this.registerTokenRepository = registerTokenRepository;
+        this.fieldOfInterestHasUserRepository = fieldOfInterestHasUserRepository;
         this.secret = secret;
     }
 
@@ -66,7 +71,14 @@ public class UserController {
     public User find(
             @PathVariable(value = "id") Long id
     ) {
-        return userRepository.findById(id).orElse(null);
+        var user = userRepository.findById(id).orElse(null);
+
+        if (user != null) {
+            var users = fieldOfInterestHasUserRepository.findByUserId(id);
+            user.setFieldOfInterestList(users);
+        }
+
+        return user;
     }
 
     @GetMapping("/api/v1/public/user/{id}")

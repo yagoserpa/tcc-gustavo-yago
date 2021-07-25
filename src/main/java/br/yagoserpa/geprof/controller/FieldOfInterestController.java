@@ -2,6 +2,8 @@ package br.yagoserpa.geprof.controller;
 
 import br.yagoserpa.geprof.model.FieldOfInterest;
 import br.yagoserpa.geprof.repository.FieldOfInterestRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,10 +35,10 @@ public class FieldOfInterestController {
     }
 
     @PostMapping("/api/v1/field/")
-    public void insert(
+    public FieldOfInterest insert(
             @RequestBody FieldOfInterest fieldOfInterest
     ) {
-        fieldOfInterestRepository.insert(fieldOfInterest);
+        return fieldOfInterestRepository.insert(fieldOfInterest);
     }
 
     @PutMapping("/api/v1/field/{id}")

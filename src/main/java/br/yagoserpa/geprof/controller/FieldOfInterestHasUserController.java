@@ -3,6 +3,10 @@ package br.yagoserpa.geprof.controller;
 import br.yagoserpa.geprof.model.FieldOfInterest;
 import br.yagoserpa.geprof.model.User;
 import br.yagoserpa.geprof.repository.FieldOfInterestHasUserRepository;
+import br.yagoserpa.geprof.repository.FieldOfInterestRepository;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,9 +15,12 @@ import java.util.List;
 public class FieldOfInterestHasUserController {
 
     private final FieldOfInterestHasUserRepository fieldOfInterestHasUserRepository;
+    private final FieldOfInterestRepository fieldOfInterestRepository;
 
-    public FieldOfInterestHasUserController(FieldOfInterestHasUserRepository fieldOfInterestHasUserRepository) {
+    public FieldOfInterestHasUserController(FieldOfInterestHasUserRepository fieldOfInterestHasUserRepository,
+                                            FieldOfInterestRepository fieldOfInterestRepository) {
         this.fieldOfInterestHasUserRepository = fieldOfInterestHasUserRepository;
+        this.fieldOfInterestRepository = fieldOfInterestRepository;
     }
 
     @GetMapping("/api/v1/field/{id}/users")
@@ -32,25 +39,42 @@ public class FieldOfInterestHasUserController {
 
     @GetMapping("/api/v1/user/{id}/fields")
     public List<FieldOfInterest> findByUser(
-            @PathVariable(value = "id") Integer id
+            @PathVariable(value = "id") Long id
     ) {
         return fieldOfInterestHasUserRepository.findByUserId(id);
     }
 
+    @PostMapping("/api/v1/field/new/user/{userId}")
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public ResponseEntity<Void> insert(
+            @PathVariable(value = "userId") Integer userId,
+            @RequestBody FieldOfInterest fieldOfInterest
+    ) {
+        var insertedFieldOfInterest = fieldOfInterestRepository.insert(fieldOfInterest);
+
+        fieldOfInterestHasUserRepository.insert(insertedFieldOfInterest.getId(), userId);
+
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping("/api/v1/field/{id}/user/{userId}")
-    public void insert(
+    public ResponseEntity<Void> insert(
             @PathVariable(value = "id") Integer id,
             @PathVariable(value = "userId") Integer userId
     ) {
         fieldOfInterestHasUserRepository.insert(id, userId);
+
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/api/v1/field/{id}/user/{userId}")
-    public void delete(
+    public ResponseEntity<Void> delete(
             @PathVariable(value = "id") Integer id,
             @PathVariable(value = "userId") Integer userId
     ) {
         fieldOfInterestHasUserRepository.delete(id, userId);
+
+        return ResponseEntity.ok().build();
     }
 
 }
