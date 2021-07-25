@@ -10,17 +10,16 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.*;
-import java.math.*;
-
-import java.util.*;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 public class UserController {
@@ -137,17 +136,29 @@ public class UserController {
 
     @PutMapping("/api/v1/user/{id}")
     public ResponseEntity<Void> update(
-            @PathVariable(value = "id") Integer id,
-            @RequestBody User user
+            @PathVariable(value = "id") Long id,
+            @RequestBody User updatedUser
     ) {
-        userRepository.update(id, user);
+        // Edit profile
+        if (updatedUser.getCurrentPassword() != null && !updatedUser.getCurrentPassword().isEmpty()) {
+            if (!userRepository.isValidUserPassword(id, updatedUser.getCurrentPassword())) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        }
+
+        // Registration || !Password Change
+        if (updatedUser.getPassword() == null || updatedUser.getPassword().isEmpty()) {
+            updatedUser.setPassword(updatedUser.getCurrentPassword());
+        }
+
+        userRepository.update(id, updatedUser);
 
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/api/v1/user/{id}")
     public void delete(
-            @PathVariable(value = "id") Integer id
+            @PathVariable(value = "id") Long id
     ) {
         userRepository.delete(id);
     }

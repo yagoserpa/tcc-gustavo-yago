@@ -42,6 +42,15 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public boolean isValidUserPassword(Long userId, String password) {
+        List<User> users = template.query("SELECT * FROM users WHERE user_id = ? AND password = crypt(?, password) LIMIT 1",
+                User::new,
+                userId,
+                password);
+        return !users.isEmpty();
+    }
+
+    @Override
     public Optional<User> findByLogin(String email, String password) {
         List<User> users = template.query("SELECT * FROM users WHERE email = ? AND password = crypt(?, password) LIMIT 1",
                 User::new,
@@ -79,7 +88,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void update(Integer id, User user) {
+    public void update(Long id, User user) {
         template.update("UPDATE users SET name = ?, email = ?, password = crypt(?, gen_salt('bf')), dre = ?, siape = ?, gender = ?, status = ?, title = ?, position = ?, room = ?, lattes = ?, user_profile = ?, course = ?, origin = ?, user_type = ? WHERE user_id = ?",
                 user.getName(),
                 user.getEmail(),
@@ -101,7 +110,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Long id) {
         template.update("UPDATE users SET status = ? WHERE user_id = ?",
                 User.Status.DELETED,
                 id);

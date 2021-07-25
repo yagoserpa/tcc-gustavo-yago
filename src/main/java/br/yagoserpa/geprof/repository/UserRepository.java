@@ -13,12 +13,14 @@ public interface UserRepository {
 
     Optional<User> findByEmail(String email);
 
+    boolean isValidUserPassword(Long userId, String password);
+
     Optional<User> findByLogin(String email, String password);
 
     Optional<User> insert(User user);
 
-    void update(Integer id, User user);
+    void update(Long id, User user);
 
-    void delete(Integer id);
+    void delete(Long id);
 
 }
