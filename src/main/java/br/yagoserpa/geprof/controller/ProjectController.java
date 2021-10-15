@@ -60,7 +60,7 @@ public class ProjectController {
 
     @GetMapping("/api/v1/public/project")
     public List<Project> publicAll() {
-        return projectRepository.findAll();
+        return projectRepository.findAllEnded();
     }
 
     @PostMapping("/api/v1/project/")

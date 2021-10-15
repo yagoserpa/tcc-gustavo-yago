@@ -9,6 +9,8 @@ public interface ProjectRepository {
 
     List<Project> findAll();
 
+    List<Project> findAllEnded();
+
     Optional<Project> findById(Integer id);
 
     Optional<Project> insert(Project record);
