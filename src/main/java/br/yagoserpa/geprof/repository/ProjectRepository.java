@@ -17,4 +17,5 @@ public interface ProjectRepository {
 
     void update(Integer id, Project record);
 
+    void delete(Integer id);
 }

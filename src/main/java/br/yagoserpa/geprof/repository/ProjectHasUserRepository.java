@@ -14,6 +14,7 @@ public interface ProjectHasUserRepository {
 
     void insert(ProjectHasUser projectHasUser);
 
-    void delete(Integer id, Integer userId);
+    void deleteByProjectAndUser(Integer id, Integer userId);
 
+    void deleteByProject(Integer projectId);
 }

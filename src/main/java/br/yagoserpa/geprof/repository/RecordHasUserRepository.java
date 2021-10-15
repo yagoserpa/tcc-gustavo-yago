@@ -11,4 +11,5 @@ public interface RecordHasUserRepository {
 
     void insert(Integer id, RecordHasUser recordHasUser);
 
+    void deleteByProject(Integer projectId);
 }

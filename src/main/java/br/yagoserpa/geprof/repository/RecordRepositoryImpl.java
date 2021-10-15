@@ -47,4 +47,9 @@ public class RecordRepositoryImpl implements RecordRepository {
                 record.getGrade()
         );
     }
+
+    @Override
+    public void deleteByProject(Integer projectId) {
+        template.update("DELETE FROM record where project_id = ?", projectId);
+    }
 }

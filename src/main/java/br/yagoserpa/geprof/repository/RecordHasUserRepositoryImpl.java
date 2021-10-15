@@ -33,4 +33,9 @@ public class RecordHasUserRepositoryImpl implements RecordHasUserRepository {
                 recordHasUser.getSignature()
         );
     }
+
+    @Override
+    public void deleteByProject(Integer projectId) {
+        template.update("DELETE FROM project_has_user where project_id = ?", projectId);
+    }
 }

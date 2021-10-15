@@ -40,9 +40,14 @@ public class ProjectHasUserRepositoryImpl implements ProjectHasUserRepository {
     }
 
     @Override
-    public void delete(Integer id, Integer userId) {
+    public void deleteByProjectAndUser(Integer id, Integer userId) {
         template.update("DELETE FROM project_has_user WHERE project_id = ? AND user_id = ?",
                 id,
                 userId);
+    }
+
+    @Override
+    public void deleteByProject(Integer projectId) {
+        template.update("DELETE FROM project_has_user where project_id = ?", projectId);
     }
 }

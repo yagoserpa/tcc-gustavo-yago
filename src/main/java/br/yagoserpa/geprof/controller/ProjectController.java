@@ -3,8 +3,7 @@ package br.yagoserpa.geprof.controller;
 import br.yagoserpa.geprof.model.Auth;
 import br.yagoserpa.geprof.model.Project;
 import br.yagoserpa.geprof.model.ProjectHasUser;
-import br.yagoserpa.geprof.repository.ProjectHasUserRepository;
-import br.yagoserpa.geprof.repository.ProjectRepository;
+import br.yagoserpa.geprof.repository.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Propagation;
@@ -19,10 +18,18 @@ public class ProjectController {
 
     private final ProjectRepository projectRepository;
     private final ProjectHasUserRepository projectHasUserRepository;
+    private final RecordHasUserRepository recordHasUserRepository;
+    private final RecordRepository recordRepository;
+    private final FileRepository fileRepository;
 
-    public ProjectController(ProjectRepository projectRepository, ProjectHasUserRepository projectHasUserRepository) {
+    public ProjectController(ProjectRepository projectRepository, ProjectHasUserRepository projectHasUserRepository,
+                             RecordHasUserRepository recordHasUserRepository, RecordRepository recordRepository,
+                             FileRepository fileRepository) {
         this.projectRepository = projectRepository;
         this.projectHasUserRepository = projectHasUserRepository;
+        this.recordHasUserRepository = recordHasUserRepository;
+        this.fileRepository = fileRepository;
+        this.recordRepository = recordRepository;
     }
 
     @GetMapping("/api/v1/project/{id}")
@@ -102,4 +109,17 @@ public class ProjectController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/api/v1/project/{id}")
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public ResponseEntity<Void> delete(
+            @PathVariable(value = "id") Integer id
+    ) {
+        fileRepository.deleteByProject(id);
+        recordHasUserRepository.deleteByProject(id);
+        recordRepository.deleteByProject(id);
+        projectHasUserRepository.deleteByProject(id);
+        projectRepository.delete(id);
+
+        return ResponseEntity.ok().build();
+    }
 }

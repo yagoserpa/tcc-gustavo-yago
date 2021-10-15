@@ -60,4 +60,8 @@ public class FileRepositoryImpl implements FileRepository {
         );
     }
 
+    @Override
+    public void deleteByProject(Integer projectId) {
+        template.update("DELETE FROM file where project_id = ?", projectId);
+    }
 }

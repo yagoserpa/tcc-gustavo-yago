@@ -60,7 +60,7 @@ public class ProjectHasUserController {
             @PathVariable(value = "id") Integer id,
             @PathVariable(value = "userId") Integer userId
     ) {
-        projectHasUserRepository.delete(id, userId);
+        projectHasUserRepository.deleteByProjectAndUser(id, userId);
 
         return ResponseEntity.ok().build();
     }

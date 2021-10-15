@@ -15,4 +15,5 @@ public interface FileRepository {
 
     void update(Integer id, File file);
 
+    void deleteByProject(Integer projectId);
 }

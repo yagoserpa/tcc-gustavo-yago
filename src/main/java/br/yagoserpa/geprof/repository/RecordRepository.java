@@ -13,4 +13,5 @@ public interface RecordRepository {
 
     void insert(Record record);
 
+    void deleteByProject(Integer projectId);
 }

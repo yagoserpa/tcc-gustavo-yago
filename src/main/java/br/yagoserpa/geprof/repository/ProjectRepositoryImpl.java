@@ -65,4 +65,9 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                 id
         );
     }
+
+    @Override
+    public void delete(Integer id) {
+        template.update("DELETE FROM project where project_id = ?", id);
+    }
 }
