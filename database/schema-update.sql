@@ -41,3 +41,13 @@ ALTER TABLE "Register_Token" RENAME TO register_token;
 ALTER TABLE users ADD CONSTRAINT email_unique UNIQUE (email);
 ALTER TABLE users ADD CONSTRAINT dre_unique UNIQUE (dre);
 ALTER TABLE users ADD CONSTRAINT siape_unique UNIQUE (siape);
+
+### Migration 2 ###
+
+ALTER TABLE file DROP CONSTRAINT "projeto_arquivo_fk";
+
+ALTER TABLE project ADD COLUMN "file" VARCHAR(4000);
+
+ALTER TABLE project ADD COLUMN "file_status" SMALLINT;
+
+DROP TABLE file;

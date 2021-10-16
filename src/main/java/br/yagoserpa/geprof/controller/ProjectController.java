@@ -20,15 +20,11 @@ public class ProjectController {
     private final ProjectHasUserRepository projectHasUserRepository;
     private final RecordHasUserRepository recordHasUserRepository;
     private final RecordRepository recordRepository;
-    private final FileRepository fileRepository;
-
     public ProjectController(ProjectRepository projectRepository, ProjectHasUserRepository projectHasUserRepository,
-                             RecordHasUserRepository recordHasUserRepository, RecordRepository recordRepository,
-                             FileRepository fileRepository) {
+                             RecordHasUserRepository recordHasUserRepository, RecordRepository recordRepository) {
         this.projectRepository = projectRepository;
         this.projectHasUserRepository = projectHasUserRepository;
         this.recordHasUserRepository = recordHasUserRepository;
-        this.fileRepository = fileRepository;
         this.recordRepository = recordRepository;
     }
 
@@ -114,7 +110,6 @@ public class ProjectController {
     public ResponseEntity<Void> delete(
             @PathVariable(value = "id") Integer id
     ) {
-        fileRepository.deleteByProject(id);
         recordHasUserRepository.deleteByProject(id);
         recordRepository.deleteByProject(id);
         projectHasUserRepository.deleteByProject(id);

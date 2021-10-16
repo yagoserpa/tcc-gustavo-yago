@@ -14,6 +14,8 @@ public class Project {
     private Status status;
     private Timestamp registerDate;
     private String keywords;
+    private String file;
+    private FileStatus fileStatus;
 
     private List<User> userList;
 
@@ -28,6 +30,8 @@ public class Project {
         registerDate = resultSet.getTimestamp("register_date");
         status = Status.fromValue(resultSet.getInt("status"));
         keywords = resultSet.getString("keywords");
+        file = resultSet.getString("file");
+        fileStatus = FileStatus.fromValue(resultSet.getInt("file_status"));
     }
 
     public Integer getId() {
@@ -94,6 +98,22 @@ public class Project {
         this.userList = userList;
     }
 
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
+    }
+
+    public FileStatus getFileStatus() {
+        return fileStatus;
+    }
+
+    public void setFileStatus(FileStatus fileStatus) {
+        this.fileStatus = fileStatus;
+    }
+
     public enum Status {
         STARTED,
         IN_PROGRESS,
@@ -102,6 +122,23 @@ public class Project {
 
         public static Status fromValue(int ordinal) {
             for (Status b : Status.values()) {
+                if (b.ordinal() == ordinal) {
+                    return b;
+                }
+            }
+
+            return null;
+        }
+    }
+
+    public enum FileStatus {
+        STARTED,
+        IN_PROGRESS,
+        ENDED,
+        CANCELED;
+
+        public static FileStatus fromValue(int ordinal) {
+            for (FileStatus b : FileStatus.values()) {
                 if (b.ordinal() == ordinal) {
                     return b;
                 }
