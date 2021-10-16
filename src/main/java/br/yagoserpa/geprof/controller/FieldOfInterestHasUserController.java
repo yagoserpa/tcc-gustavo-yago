@@ -1,5 +1,6 @@
 package br.yagoserpa.geprof.controller;
 
+import br.yagoserpa.geprof.model.Auth;
 import br.yagoserpa.geprof.model.FieldOfInterest;
 import br.yagoserpa.geprof.model.User;
 import br.yagoserpa.geprof.repository.FieldOfInterestHasUserRepository;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletRequest;
 import java.util.List;
 
 @RestController
@@ -42,6 +44,14 @@ public class FieldOfInterestHasUserController {
             @PathVariable(value = "id") Long id
     ) {
         return fieldOfInterestHasUserRepository.findByUserId(id);
+    }
+
+    @GetMapping("/api/v1/user/fields")
+    public List<FieldOfInterest> findByAuthUserId(
+            ServletRequest request
+    ) {
+        Auth auth = (Auth) request.getAttribute("auth");
+        return fieldOfInterestHasUserRepository.findByUserId(auth.getId());
     }
 
     @PostMapping("/api/v1/field/new/user/{userId}")
