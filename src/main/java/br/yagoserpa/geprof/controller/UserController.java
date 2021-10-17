@@ -1,9 +1,6 @@
 package br.yagoserpa.geprof.controller;
 
-import br.yagoserpa.geprof.model.Credentials;
-import br.yagoserpa.geprof.model.LoginResponse;
-import br.yagoserpa.geprof.model.RegisterToken;
-import br.yagoserpa.geprof.model.User;
+import br.yagoserpa.geprof.model.*;
 import br.yagoserpa.geprof.repository.FieldOfInterestHasUserRepository;
 import br.yagoserpa.geprof.repository.ProjectHasUserRepository;
 import br.yagoserpa.geprof.repository.RegisterTokenRepository;
@@ -16,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
@@ -63,7 +62,6 @@ public class UserController {
                 .signWith(SignatureAlgorithm.HS256, secret.getBytes())
                 .compact();
 
-//        return ResponseEntity.ok(Map.of("access_token", token));
         return ResponseEntity.ok(new LoginResponse(token, user));
     }
 
@@ -88,30 +86,30 @@ public class UserController {
         return userRepository.findById(id).orElse(null);
     }
 
-    @GetMapping("/api/v1/user")
-    public ResponseEntity<List<User>> all(@RequestParam(name = "token") Optional<String> tokenOptional) {
-        if (tokenOptional.isEmpty()) {
-            return ResponseEntity.ok(userRepository.findAll());
-        } else {
-            var token = tokenOptional.get();
-            var savedTokenOptional = registerTokenRepository.findByToken(token);
+    @GetMapping("/api/v1/public/user")
+    public ResponseEntity<List<User>> userByToken(@RequestParam(name = "token") String token) {
+        var savedTokenOptional = registerTokenRepository.findByToken(token);
 
-            if (savedTokenOptional.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-            }
-
-            var savedToken = savedTokenOptional.get();
-
-            var userOptional = userRepository.findById(savedToken.getUserId());
-
-            if (userOptional.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-            }
-
-            var user = userOptional.get();
-
-            return ResponseEntity.ok(List.of(user));
+        if (savedTokenOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+
+        var savedToken = savedTokenOptional.get();
+
+        var userOptional = userRepository.findById(savedToken.getUserId());
+
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        var user = userOptional.get();
+
+        return ResponseEntity.ok(List.of(user));
+    }
+
+    @GetMapping("/api/v1/user")
+    public ResponseEntity<List<User>> all() {
+        return ResponseEntity.ok(userRepository.findAll());
     }
 
     @PostMapping("/api/v1/user")
@@ -165,6 +163,20 @@ public class UserController {
 
         userRepository.update(id, updatedUser);
 
+        registerTokenRepository.deleteByUserId(id);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/api/v1/public/user/{id}")
+    public ResponseEntity<Void> updatePassword(
+            @PathVariable(value = "id") Long id,
+            @RequestBody User updatedUser
+    ) {
+        userRepository.update(id, updatedUser);
+
+        registerTokenRepository.deleteByUserId(id);
+
         return ResponseEntity.ok().build();
     }
 
@@ -175,4 +187,29 @@ public class UserController {
         userRepository.delete(id);
     }
 
+    @PostMapping("/api/v1/public/user/forgotpassword")
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public ResponseEntity<Void> forgotPassword(
+            @RequestBody Email email
+    ) {
+        var userOptional = userRepository.findByEmail(email.getEmail());
+
+        if (userOptional.isPresent()) {
+            var user = userOptional.get();
+
+            String registerToken = UUID.randomUUID().toString();
+
+            registerTokenRepository.insert(new RegisterToken(user.getId(), registerToken));
+
+            SimpleMailMessage mail = new SimpleMailMessage();
+            mail.setTo(user.getEmail());
+            mail.setSubject("Recuperação de senha do GeProFi");
+            mail.setText("Olá, aqui está o link para recuperar sua senha: " +
+                    "http://geprofi-front.herokuapp.com/forgotpassword?token=" + registerToken);
+
+            javaMailSender.send(mail);
+        }
+
+        return ResponseEntity.ok().build();
+    }
 }

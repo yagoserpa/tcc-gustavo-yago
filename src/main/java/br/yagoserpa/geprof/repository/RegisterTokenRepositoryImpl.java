@@ -53,4 +53,10 @@ public class RegisterTokenRepositoryImpl implements RegisterTokenRepository {
         template.update("DELETE FROM register_token WHERE register_token_id = ?",
                 id);
     }
+
+    @Override
+    public void deleteByUserId(Long userId) {
+        template.update("DELETE FROM register_token WHERE user_id = ?",
+                userId);
+    }
 }

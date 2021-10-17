@@ -13,4 +13,6 @@ public interface RegisterTokenRepository {
     void insert(RegisterToken registerToken);
 
     void delete(Integer id);
+
+    void deleteByUserId(Long id);
 }
