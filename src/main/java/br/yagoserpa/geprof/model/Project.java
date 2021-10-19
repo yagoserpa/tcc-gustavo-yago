@@ -31,7 +31,7 @@ public class Project {
         status = Status.fromValue(resultSet.getInt("status"));
         keywords = resultSet.getString("keywords");
         file = resultSet.getString("file");
-        fileStatus = FileStatus.fromValue(resultSet.getInt("file_status"));
+        fileStatus = FileStatus.fromValue((Integer) resultSet.getObject("file_status"));
     }
 
     public Integer getId() {
@@ -132,15 +132,15 @@ public class Project {
     }
 
     public enum FileStatus {
-        STARTED,
-        IN_PROGRESS,
-        ENDED,
-        CANCELED;
+        IN_REVIEW,
+        REVIEWED;
 
-        public static FileStatus fromValue(int ordinal) {
-            for (FileStatus b : FileStatus.values()) {
-                if (b.ordinal() == ordinal) {
-                    return b;
+        public static FileStatus fromValue(Integer ordinal) {
+            if (ordinal != null) {
+                for (FileStatus b : FileStatus.values()) {
+                    if (b.ordinal() == ordinal) {
+                        return b;
+                    }
                 }
             }
 

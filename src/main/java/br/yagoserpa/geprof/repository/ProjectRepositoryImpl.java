@@ -55,13 +55,15 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
     @Override
     public void update(Integer id, Project project) {
-        template.update("UPDATE project SET subject = ?, title = ?, description = ?, register_date = ?, status = ?, keywords = ? WHERE project_id = ?",
+        template.update("UPDATE project SET subject = ?, title = ?, description = ?, register_date = ?, status = ?, keywords = ?, file = ?, file_status = ? WHERE project_id = ?",
                 project.getSubject(),
                 project.getTitle(),
                 project.getDescription(),
                 project.getRegisterDate(),
                 project.getStatus().ordinal(),
                 project.getKeywords(),
+                project.getFile(),
+                project.getFileStatus().ordinal(),
                 id
         );
     }
