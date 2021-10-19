@@ -20,7 +20,12 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findAll() {
-        return template.query("SELECT * FROM users", User::new);
+        return template.query("SELECT * FROM users ORDER BY name ASC", User::new);
+    }
+
+    @Override
+    public List<User> findAllActive() {
+        return template.query("SELECT * FROM users WHERE status = 1 ORDER BY name ASC", User::new);
     }
 
     @Override
@@ -107,12 +112,5 @@ public class UserRepositoryImpl implements UserRepository {
                 user.getUserType().ordinal(),
                 id
         );
-    }
-
-    @Override
-    public void delete(Long id) {
-        template.update("UPDATE users SET status = ? WHERE user_id = ?",
-                User.Status.DELETED,
-                id);
     }
 }

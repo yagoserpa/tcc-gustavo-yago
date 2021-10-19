@@ -107,9 +107,14 @@ public class UserController {
         return ResponseEntity.ok(List.of(user));
     }
 
-    @GetMapping("/api/v1/user")
+    @GetMapping("/api/v1/users")
     public ResponseEntity<List<User>> all() {
         return ResponseEntity.ok(userRepository.findAll());
+    }
+
+    @GetMapping("/api/v1/users/active")
+    public ResponseEntity<List<User>> allActive() {
+        return ResponseEntity.ok(userRepository.findAllActive());
     }
 
     @PostMapping("/api/v1/user")
@@ -178,13 +183,6 @@ public class UserController {
         registerTokenRepository.deleteByUserId(id);
 
         return ResponseEntity.ok().build();
-    }
-
-    @DeleteMapping("/api/v1/user/{id}")
-    public void delete(
-            @PathVariable(value = "id") Long id
-    ) {
-        userRepository.delete(id);
     }
 
     @PostMapping("/api/v1/public/user/forgotpassword")

@@ -22,7 +22,7 @@ public class ProjectHasUserRepositoryImpl implements ProjectHasUserRepository {
 
     @Override
     public List<User> findByProjectId(Integer id) {
-        return template.query("SELECT u.* FROM project_has_user phu, users u WHERE phu.project_id = ? AND phu.user_id = u.user_id", User::new, id);
+        return template.query("SELECT u.* FROM project_has_user phu, users u WHERE phu.project_id = ? AND phu.user_id = u.user_id ORDER BY u.name ASC", User::new, id);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ProjectHasUserRepositoryImpl implements ProjectHasUserRepository {
 
     @Override
     public List<User> findStudentsByProjectId(Integer id) {
-        return template.query("SELECT u.* FROM project_has_user phu, users u WHERE phu.project_id = ? AND phu.committee = FALSE AND phu.coop = FALSE AND u.user_type = 2 AND phu.user_id = u.user_id", User::new, id);
+        return template.query("SELECT u.* FROM project_has_user phu, users u WHERE phu.project_id = ? AND phu.committee = FALSE AND phu.coop = FALSE AND u.user_type = 2 AND phu.user_id = u.user_id ORDER BY u.name ASC", User::new, id);
     }
 
     @Override

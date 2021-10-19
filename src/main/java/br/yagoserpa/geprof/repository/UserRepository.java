@@ -9,6 +9,8 @@ public interface UserRepository {
 
     List<User> findAll();
 
+    List<User> findAllActive();
+
     Optional<User> findById(Long id);
 
     Optional<User> findByEmail(String email);
@@ -20,7 +22,4 @@ public interface UserRepository {
     Optional<User> insert(User user);
 
     void update(Long id, User user);
-
-    void delete(Long id);
-
 }
