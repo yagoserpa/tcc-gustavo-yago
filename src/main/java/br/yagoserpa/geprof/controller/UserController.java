@@ -122,7 +122,7 @@ public class UserController {
             @RequestBody User user
     ) {
         user.setStatus(User.Status.ACTIVE);
-        if (user.getUserType() == User.Type.STUDENT) {
+        if (user.getUserType() == User.Type.STUDENT || user.getUserType() == User.Type.TEACHER) {
             user.setOrigin("Universidade Federal do Rio de Janeiro");
         }
 
