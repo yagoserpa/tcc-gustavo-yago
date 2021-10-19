@@ -245,8 +245,7 @@ public class User {
 
     public enum Status {
         INACTIVE,
-        ACTIVE,
-        DELETED;
+        ACTIVE;
 
         public static Status fromValue(int ordinal) {
             for (Status b : Status.values()) {
