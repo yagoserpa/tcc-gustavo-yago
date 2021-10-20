@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -151,12 +152,15 @@ public class ProjectController {
 
             recordRepository.insert(record);
 
-            // mandar email
-            int i = 2;
+            sendPresentationDataToUsersFromProject(id, project);
         } else {
             var record = recordOptional.get();
 
-            // ver se algum campo mudou para mandar email
+            if (!project.getRecord().getThesisDate().equals(record.getThesisDate()) ||
+                    !project.getRecord().getBeginTime().equals(record.getBeginTime()) ||
+                    !project.getRecord().getLocation().equals(record.getLocation())) {
+                sendPresentationDataToUsersFromProject(id, project);
+            }
 
             record.setThesisDate(project.getRecord().getThesisDate());
             record.setBeginTime(project.getRecord().getBeginTime());
@@ -168,6 +172,29 @@ public class ProjectController {
         projectRepository.update(id, project);
 
         return ResponseEntity.ok().build();
+    }
+
+    private void sendPresentationDataToUsersFromProject(Integer id, Project project) {
+        var userList = projectHasUserRepository.findByProjectId(id);
+
+        var mailBody = "A defesa de tese do projeto " + project.getTitle() + " está marcada para o dia " +
+                project.getRecord().getThesisDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) +
+                " às " + project.getRecord().getBeginTime();
+
+        if (project.getRecord().getLocation() != null && !project.getRecord().getLocation().isEmpty()) {
+            mailBody += " no local " + project.getRecord().getLocation();
+        }
+
+        mailBody += ".";
+
+        for (User user : userList) {
+            SimpleMailMessage mail = new SimpleMailMessage();
+            mail.setTo(user.getEmail());
+            mail.setSubject("[GeProFi] Uma defesa de tese está marcada");
+            mail.setText(mailBody);
+
+            javaMailSender.send(mail);
+        }
     }
 
     @PutMapping("/api/v1/project/{id}/review")

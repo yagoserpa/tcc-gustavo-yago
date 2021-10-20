@@ -19,7 +19,7 @@
     <column id="COL3" populated="true" UUID="ba4810e6-5644-4bbf-8387-43408985ad60" autoIncrement="false" autoIncrementSequenceName="Project_codProjeto_seq" defaultValue="" name="project_id" nullable="0" physicalName="project_id" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL4" populated="true" UUID="4e80ffde-fac1-4bc7-ab43-b4aad0ddd03e" autoIncrement="false" autoIncrementSequenceName="Record_thesis_id_seq" defaultValue="" name="thesis_id" nullable="0" physicalName="thesis_id" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+    <column id="COL4" populated="true" UUID="4e80ffde-fac1-4bc7-ab43-b4aad0ddd03e" autoIncrement="false" autoIncrementSequenceName="Record_thesis_id_seq" defaultValue="" name="thesis_id" nullable="1" physicalName="thesis_id" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
     <column id="COL5" populated="true" UUID="47192013-edae-4d37-9fe1-9460b9c0f040" autoIncrement="false" autoIncrementSequenceName="Record_thesis_date_seq" defaultValue="" name="thesis_date" nullable="0" physicalName="thesis_date" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="91" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
@@ -28,19 +28,19 @@
     <column id="COL6" populated="true" UUID="722f0bbb-2559-465c-9662-16fa38e146b5" autoIncrement="false" autoIncrementSequenceName="Record_begin_time_seq" defaultValue="" name="begin_time" nullable="0" physicalName="begin_time" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="92" userDefinedTypeUUID="10d6960f-169d-47c2-860a-37341342b1d5" >
      <remarks></remarks>
     </column>
-    <column id="COL7" populated="true" UUID="2d8e3455-926f-4595-9973-47b950db6eb4" autoIncrement="false" autoIncrementSequenceName="Record_end_time_seq" defaultValue="" name="end_time" nullable="0" physicalName="end_time" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="92" userDefinedTypeUUID="10d6960f-169d-47c2-860a-37341342b1d5" >
+    <column id="COL7" populated="true" UUID="2d8e3455-926f-4595-9973-47b950db6eb4" autoIncrement="false" autoIncrementSequenceName="Record_end_time_seq" defaultValue="" name="end_time" nullable="1" physicalName="end_time" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="92" userDefinedTypeUUID="10d6960f-169d-47c2-860a-37341342b1d5" >
      <remarks></remarks>
     </column>
-    <column id="COL8" populated="true" UUID="4d990b25-9d81-436b-8675-983cf02aa1ac" autoIncrement="false" autoIncrementSequenceName="Record_location_seq" defaultValue="" name="location" nullable="0" physicalName="location" precision="255" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL8" populated="true" UUID="4d990b25-9d81-436b-8675-983cf02aa1ac" autoIncrement="false" autoIncrementSequenceName="Record_location_seq" defaultValue="" name="location" nullable="1" physicalName="location" precision="255" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL9" populated="true" UUID="ec79113b-bd34-4809-9fd3-8dadb811ed36" autoIncrement="false" autoIncrementSequenceName="Record_evaluation_seq" defaultValue="" name="evaluation" nullable="0" physicalName="evaluation" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-6" userDefinedTypeUUID="608a1d2c-c960-44ac-b1f3-503aba0a5b7b" >
+    <column id="COL9" populated="true" UUID="ec79113b-bd34-4809-9fd3-8dadb811ed36" autoIncrement="false" autoIncrementSequenceName="Record_evaluation_seq" defaultValue="" name="evaluation" nullable="1" physicalName="evaluation" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-6" userDefinedTypeUUID="608a1d2c-c960-44ac-b1f3-503aba0a5b7b" >
      <remarks></remarks>
     </column>
     <column id="COL10" populated="true" UUID="3eb73f07-1a12-459d-ae28-2dc9f6260af8" autoIncrement="false" autoIncrementSequenceName="Record_deadline_seq" defaultValue="" name="deadline" nullable="1" physicalName="deadline" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL11" populated="true" UUID="d826a653-7fb0-43fb-b320-136894b08588" autoIncrement="false" autoIncrementSequenceName="Project_grade_seq" defaultValue="" name="grade" nullable="0" physicalName="grade" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="3" userDefinedTypeUUID="cc1304ea-628a-4fc5-a84a-06ba14759152" >
+    <column id="COL11" populated="true" UUID="d826a653-7fb0-43fb-b320-136894b08588" autoIncrement="false" autoIncrementSequenceName="Project_grade_seq" defaultValue="" name="grade" nullable="1" physicalName="grade" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="3" userDefinedTypeUUID="cc1304ea-628a-4fc5-a84a-06ba14759152" >
      <remarks></remarks>
     </column>
     </folder>
