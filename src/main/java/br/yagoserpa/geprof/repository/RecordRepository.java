@@ -11,7 +11,11 @@ public interface RecordRepository {
 
     Optional<Record> findById(Integer id);
 
+    Optional<Record> findByProjectId(Integer projectId);
+
     void insert(Record record);
+
+    void update(Integer id, Record record);
 
     void deleteByProject(Integer projectId);
 }

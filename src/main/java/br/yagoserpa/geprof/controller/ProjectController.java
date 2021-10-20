@@ -1,9 +1,6 @@
 package br.yagoserpa.geprof.controller;
 
-import br.yagoserpa.geprof.model.Auth;
-import br.yagoserpa.geprof.model.Project;
-import br.yagoserpa.geprof.model.ProjectHasUser;
-import br.yagoserpa.geprof.model.User;
+import br.yagoserpa.geprof.model.*;
 import br.yagoserpa.geprof.repository.ProjectHasUserRepository;
 import br.yagoserpa.geprof.repository.ProjectRepository;
 import br.yagoserpa.geprof.repository.RecordHasUserRepository;
@@ -43,25 +40,29 @@ public class ProjectController {
     public Project find(
             @PathVariable(value = "id") Integer id
     ) {
-        var project = projectRepository.findById(id).orElse(null);
-
-        if (project != null) {
-            var users = projectHasUserRepository.findByProjectId(id);
-            project.setUserList(users);
-        }
-
-        return project;
+        return getProject(id);
     }
 
     @GetMapping("/api/v1/public/project/{id}")
     public Project publicFind(
             @PathVariable(value = "id") Integer id
     ) {
+        return getProject(id);
+    }
+
+    private Project getProject(Integer id) {
         var project = projectRepository.findById(id).orElse(null);
 
         if (project != null) {
             var users = projectHasUserRepository.findByProjectId(id);
             project.setUserList(users);
+
+            var recordOptional = recordRepository.findByProjectId(id);
+
+            if (recordOptional.isPresent()) {
+                var record = recordOptional.get();
+                project.setRecord(record);
+            }
         }
 
         return project;
@@ -137,6 +138,31 @@ public class ProjectController {
             mail.setText("Confira no link abaixo:\n" + project.getFile());
 
             javaMailSender.send(mail);
+        }
+
+        var recordOptional = recordRepository.findByProjectId(id);
+
+        if (recordOptional.isEmpty()) {
+            var record = new Record();
+            record.setProjectId(project.getId());
+            record.setThesisDate(project.getRecord().getThesisDate());
+            record.setBeginTime(project.getRecord().getBeginTime());
+            record.setLocation(project.getRecord().getLocation());
+
+            recordRepository.insert(record);
+
+            // mandar email
+            int i = 2;
+        } else {
+            var record = recordOptional.get();
+
+            // ver se algum campo mudou para mandar email
+
+            record.setThesisDate(project.getRecord().getThesisDate());
+            record.setBeginTime(project.getRecord().getBeginTime());
+            record.setLocation(project.getRecord().getLocation());
+
+            recordRepository.update(record.getId(), record);
         }
 
         projectRepository.update(id, project);

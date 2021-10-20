@@ -33,18 +33,37 @@ public class RecordRepositoryImpl implements RecordRepository {
     }
 
     @Override
+    public Optional<Record> findByProjectId(Integer projectId) {
+        List<Record> records = template.query("SELECT * FROM record WHERE project_id = ? LIMIT 1", Record::new, projectId);
+        if (records.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(records.get(0));
+    }
+
+    @Override
     public void insert(Record record) {
-        template.query("INSERT INTO record (project_id, thesis_id, thesis_date, begin_time, end_time, location, evaluation, deadline, grade) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        template.query("INSERT INTO record (project_id, thesis_date, begin_time, location) VALUES (?, ?, ?, ?)",
                 Record::new,
                 record.getProjectId(),
+                record.getThesisDate(),
+                record.getBeginTime(),
+                record.getLocation()
+        );
+    }
+
+    @Override
+    public void update(Integer id, Record record) {
+        template.update("UPDATE record SET thesis_id = ?, thesis_date = ?, begin_time = ?, end_time = ?, location = ?, evaluation = ?, deadline = ?, grade = ? WHERE record_id = ?",
                 record.getThesisId(),
                 record.getThesisDate(),
                 record.getBeginTime(),
                 record.getEndTime(),
                 record.getLocation(),
-                record.getEvaluation().ordinal(),
+                record.getEvaluation() == null ? null : record.getEvaluation().ordinal(),
                 record.getDeadline(),
-                record.getGrade()
+                record.getGrade(),
+                record.getId()
         );
     }
 

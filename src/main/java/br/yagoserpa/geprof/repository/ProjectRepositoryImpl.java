@@ -63,7 +63,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                 project.getStatus().ordinal(),
                 project.getKeywords(),
                 project.getFile(),
-                project.getFileStatus().ordinal(),
+                project.getFileStatus() == null ? null : project.getFileStatus().ordinal(),
                 id
         );
     }

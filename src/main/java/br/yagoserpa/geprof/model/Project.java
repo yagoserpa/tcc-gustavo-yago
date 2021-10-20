@@ -18,6 +18,7 @@ public class Project {
     private FileStatus fileStatus;
 
     private List<User> userList;
+    private Record record;
 
     public Project() {
     }
@@ -114,9 +115,18 @@ public class Project {
         this.fileStatus = fileStatus;
     }
 
+    public Record getRecord() {
+        return record;
+    }
+
+    public void setRecord(Record record) {
+        this.record = record;
+    }
+
     public enum Status {
         STARTED,
         IN_PROGRESS,
+        TO_BE_PRESENTED,
         ENDED,
         CANCELED;
 

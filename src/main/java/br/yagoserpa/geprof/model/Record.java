@@ -4,13 +4,14 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.time.LocalDate;
 
 public class Record {
 
     private Integer id;
     private Integer projectId;
     private Integer thesisId;
-    private Date thesisDate;
+    private LocalDate thesisDate;
     private Time beginTime;
     private Time endTime;
     private String location;
@@ -24,14 +25,14 @@ public class Record {
     public Record(ResultSet resultSet, int row) throws SQLException {
         id = resultSet.getInt("record_id");
         projectId = resultSet.getInt("project_id");
-        thesisId = resultSet.getInt("thesis_id");
-        thesisDate = resultSet.getDate("thesis_date");
+        thesisId = (Integer) resultSet.getObject("thesis_id");
+        thesisDate = LocalDate.parse(resultSet.getString("thesis_date"));
         beginTime = resultSet.getTime("begin_time");
         endTime = resultSet.getTime("end_time");
         location = resultSet.getString("location");
-        evaluation = Evaluation.fromValue(resultSet.getInt("evaluation"));
-        deadline = resultSet.getInt("deadline");
-        grade = resultSet.getFloat("grade");
+        evaluation = Evaluation.fromValue((Integer) resultSet.getObject("evaluation"));
+        deadline = (Integer) resultSet.getObject("deadline");
+        grade = (Float) resultSet.getObject("grade");
     }
 
     public Integer getId() {
@@ -58,11 +59,11 @@ public class Record {
         this.thesisId = thesisId;
     }
 
-    public Date getThesisDate() {
+    public LocalDate getThesisDate() {
         return thesisDate;
     }
 
-    public void setThesisDate(Date thesisDate) {
+    public void setThesisDate(LocalDate thesisDate) {
         this.thesisDate = thesisDate;
     }
 
@@ -119,10 +120,12 @@ public class Record {
         PASSED_WITH_MODIFICATIONS,
         FAILED;
 
-        public static Evaluation fromValue(int ordinal) {
-            for (Evaluation b : Evaluation.values()) {
-                if (b.ordinal() == ordinal) {
-                    return b;
+        public static Evaluation fromValue(Integer ordinal) {
+            if (ordinal != null) {
+                for (Evaluation b : Evaluation.values()) {
+                    if (b.ordinal() == ordinal) {
+                        return b;
+                    }
                 }
             }
 
