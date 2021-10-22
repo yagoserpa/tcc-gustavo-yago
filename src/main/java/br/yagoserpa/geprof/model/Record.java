@@ -17,6 +17,7 @@ public class Record {
     private Evaluation evaluation;
     private Integer deadline;
     private Float grade;
+    private String gradeDescription;
 
     public Record() {
     }
@@ -32,6 +33,7 @@ public class Record {
         evaluation = Evaluation.fromValue((Integer) resultSet.getObject("evaluation"));
         deadline = (Integer) resultSet.getObject("deadline");
         grade = (Float) resultSet.getObject("grade");
+        gradeDescription = resultSet.getString("grade_description");
     }
 
     public Integer getId() {
@@ -112,6 +114,14 @@ public class Record {
 
     public void setGrade(Float grade) {
         this.grade = grade;
+    }
+
+    public String getGradeDescription() {
+        return gradeDescription;
+    }
+
+    public void setGradeDescription(String gradeDescription) {
+        this.gradeDescription = gradeDescription;
     }
 
     public enum Evaluation {
