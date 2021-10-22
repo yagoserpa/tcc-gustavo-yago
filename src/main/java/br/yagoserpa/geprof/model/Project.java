@@ -127,6 +127,7 @@ public class Project {
         STARTED,
         IN_PROGRESS,
         TO_BE_PRESENTED,
+        WAITING_SIGNATURES,
         ENDED,
         CANCELED;
 

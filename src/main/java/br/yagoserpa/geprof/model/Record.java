@@ -1,5 +1,6 @@
 package br.yagoserpa.geprof.model;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
@@ -16,7 +17,7 @@ public class Record {
     private String location;
     private Evaluation evaluation;
     private Integer deadline;
-    private Float grade;
+    private BigDecimal grade;
     private String gradeDescription;
 
     public Record() {
@@ -32,7 +33,7 @@ public class Record {
         location = resultSet.getString("location");
         evaluation = Evaluation.fromValue((Integer) resultSet.getObject("evaluation"));
         deadline = (Integer) resultSet.getObject("deadline");
-        grade = (Float) resultSet.getObject("grade");
+        grade = (BigDecimal) resultSet.getObject("grade");
         gradeDescription = resultSet.getString("grade_description");
     }
 
@@ -108,11 +109,11 @@ public class Record {
         this.deadline = deadline;
     }
 
-    public Float getGrade() {
+    public BigDecimal getGrade() {
         return grade;
     }
 
-    public void setGrade(Float grade) {
+    public void setGrade(BigDecimal grade) {
         this.grade = grade;
     }
 

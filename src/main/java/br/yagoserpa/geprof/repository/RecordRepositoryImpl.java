@@ -54,7 +54,7 @@ public class RecordRepositoryImpl implements RecordRepository {
 
     @Override
     public void update(Integer id, Record record) {
-        template.update("UPDATE record SET thesis_id = ?, thesis_date = ?, begin_time = ?, end_time = ?, location = ?, evaluation = ?, deadline = ?, grade = ? WHERE record_id = ?",
+        template.update("UPDATE record SET thesis_id = ?, thesis_date = ?, begin_time = ?, end_time = ?, location = ?, evaluation = ?, deadline = ?, grade = ?, grade_description = ? WHERE record_id = ?",
                 record.getThesisId(),
                 record.getThesisDate(),
                 record.getBeginTime(),
@@ -63,6 +63,7 @@ public class RecordRepositoryImpl implements RecordRepository {
                 record.getEvaluation() == null ? null : record.getEvaluation().ordinal(),
                 record.getDeadline(),
                 record.getGrade(),
+                record.getGradeDescription(),
                 record.getId()
         );
     }
