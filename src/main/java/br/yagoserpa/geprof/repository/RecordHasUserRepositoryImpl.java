@@ -1,6 +1,5 @@
 package br.yagoserpa.geprof.repository;
 
-import br.yagoserpa.geprof.model.RecordHasUser;
 import br.yagoserpa.geprof.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -24,18 +23,17 @@ public class RecordHasUserRepositoryImpl implements RecordHasUserRepository {
     }
 
     @Override
-    public void insert(Integer id, RecordHasUser recordHasUser) {
-        template.query("INSERT INTO project_has_user (record_id, project_id, user_id, signature) VALUES (?, ?, ?, ?)",
-                RecordHasUser::new,
-                id,
-                recordHasUser.getProjectId(),
-                recordHasUser.getUserId(),
-                recordHasUser.getSignature()
+    public void insert(Integer projectId, Integer recordId, Integer userId, String signature) {
+        template.update("INSERT INTO record_has_user (record_id, project_id, user_id, signature) VALUES (?, ?, ?, ?)",
+                recordId,
+                projectId,
+                userId,
+                signature
         );
     }
 
     @Override
     public void deleteByProject(Integer projectId) {
-        template.update("DELETE FROM project_has_user where project_id = ?", projectId);
+        template.update("DELETE FROM record_has_user where project_id = ?", projectId);
     }
 }

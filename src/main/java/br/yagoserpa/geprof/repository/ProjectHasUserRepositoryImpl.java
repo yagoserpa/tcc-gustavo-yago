@@ -21,8 +21,11 @@ public class ProjectHasUserRepositoryImpl implements ProjectHasUserRepository {
     }
 
     @Override
-    public List<User> findByProjectId(Integer id) {
-        return template.query("SELECT u.*, phu.* FROM project_has_user phu, users u WHERE phu.project_id = ? AND phu.user_id = u.user_id ORDER BY u.name ASC", User::new, id);
+    public List<User> findByProjectId(Integer projectId) {
+        return template.query("SELECT u.*, phu.committee, phu.coop, rhu.signature FROM users u inner join project_has_user phu on u.user_id = phu.user_id inner join record r on phu.project_id = r.project_id left join record_has_user rhu on (rhu.record_id = r.record_id AND rhu.user_id = phu.user_id) WHERE phu.project_id = ? ORDER BY u.name ASC",
+                User::new,
+                projectId
+        );
     }
 
     @Override

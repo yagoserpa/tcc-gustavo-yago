@@ -246,7 +246,7 @@
     <column id="COL70" populated="true" UUID="8321995b-684b-4b21-83a0-092a6cc0d070" autoIncrement="false" autoIncrementSequenceName="Projeto_has_Usuario_codUsuario_seq_1" defaultValue="" name="user_id" nullable="0" physicalName="user_id" precision="0" primaryKeySeq="2" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL71" populated="true" UUID="88cd8984-7674-4515-b7c5-ed7f61875b97" autoIncrement="false" autoIncrementSequenceName="Record_has_User_signature_seq" defaultValue="" name="signature" nullable="0" physicalName="signature" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="2004" userDefinedTypeUUID="5c50e616-a448-40e1-abcd-5bfc04dcc607" >
+    <column id="COL71" populated="true" UUID="88cd8984-7674-4515-b7c5-ed7f61875b97" autoIncrement="false" autoIncrementSequenceName="Record_has_User_signature_seq" defaultValue="" name="signature" nullable="0" physicalName="signature" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     </folder>

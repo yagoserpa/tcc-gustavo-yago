@@ -30,7 +30,7 @@ public class User {
     private Boolean committee;
     private Boolean coop;
 
-    private Blob signature;
+    private String signature;
 
     private List<FieldOfInterest> fieldOfInterestList;
 
@@ -62,7 +62,7 @@ public class User {
         }
 
         try {
-            signature = resultSet.getBlob("signature");
+            signature = resultSet.getString("signature");
         } catch (Exception ignored) {
         }
     }
@@ -227,11 +227,11 @@ public class User {
         this.coop = coop;
     }
 
-    public Blob getSignature() {
+    public String getSignature() {
         return signature;
     }
 
-    public void setSignature(Blob signature) {
+    public void setSignature(String signature) {
         this.signature = signature;
     }
 

@@ -67,3 +67,7 @@ ALTER TABLE ONLY "record" ALTER COLUMN "evaluation" TYPE SMALLINT, ALTER COLUMN 
 ### Migration 4 ###
 
 ALTER TABLE record ADD COLUMN "grade_description" VARCHAR(30);
+
+### Migratoin 5 ###
+
+ALTER TABLE ONLY record_has_user ALTER COLUMN "signature" TYPE VARCHAR, ALTER COLUMN "signature" SET NOT NULL;

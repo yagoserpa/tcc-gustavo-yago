@@ -1,6 +1,5 @@
 package br.yagoserpa.geprof.model;
 
-import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -9,7 +8,7 @@ public class RecordHasUser {
     private Integer id;
     private Integer projectId;
     private Integer userId;
-    private Blob signature;
+    private String signature;
 
     public RecordHasUser() {
     }
@@ -18,7 +17,7 @@ public class RecordHasUser {
         id = resultSet.getInt("record_id");
         projectId = resultSet.getInt("project_id");
         userId = resultSet.getInt("user_id");
-        signature = resultSet.getBlob("signature");
+        signature = resultSet.getString("signature");
     }
 
     public Integer getId() {
@@ -45,11 +44,11 @@ public class RecordHasUser {
         this.userId = userId;
     }
 
-    public Blob getSignature() {
+    public String getSignature() {
         return signature;
     }
 
-    public void setSignature(Blob signature) {
+    public void setSignature(String signature) {
         this.signature = signature;
     }
 }
