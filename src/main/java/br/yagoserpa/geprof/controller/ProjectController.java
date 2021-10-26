@@ -117,7 +117,7 @@ public class ProjectController {
         var projectOptional = projectRepository.findById(id);
 
         if (projectOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.badRequest().build();
         }
 
         var savedProject = projectOptional.get();
@@ -128,7 +128,7 @@ public class ProjectController {
             var advisorOptional = projectHasUserRepository.findAdvisorByProjectId(id);
 
             if (advisorOptional.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+                return ResponseEntity.badRequest().build();
             }
 
             var advisor = advisorOptional.get();
@@ -141,32 +141,34 @@ public class ProjectController {
             javaMailSender.send(mail);
         }
 
-        var recordOptional = recordRepository.findByProjectId(id);
+        if (project.getStatus() == Project.Status.TO_BE_PRESENTED) {
+            var recordOptional = recordRepository.findByProjectId(id);
 
-        if (recordOptional.isEmpty()) {
-            var record = new Record();
-            record.setProjectId(project.getId());
-            record.setThesisDate(project.getRecord().getThesisDate());
-            record.setBeginTime(project.getRecord().getBeginTime());
-            record.setLocation(project.getRecord().getLocation());
+            if (recordOptional.isEmpty()) {
+                var record = new Record();
+                record.setProjectId(project.getId());
+                record.setThesisDate(project.getRecord().getThesisDate());
+                record.setBeginTime(project.getRecord().getBeginTime());
+                record.setLocation(project.getRecord().getLocation());
 
-            recordRepository.insert(record);
+                recordRepository.insert(record);
 
-            sendPresentationDataToUsersFromProject(id, project);
-        } else {
-            var record = recordOptional.get();
-
-            if (!project.getRecord().getThesisDate().equals(record.getThesisDate()) ||
-                    !project.getRecord().getBeginTime().equals(record.getBeginTime()) ||
-                    !project.getRecord().getLocation().equals(record.getLocation())) {
                 sendPresentationDataToUsersFromProject(id, project);
+            } else {
+                var record = recordOptional.get();
+
+                if (!project.getRecord().getThesisDate().equals(record.getThesisDate()) ||
+                        !project.getRecord().getBeginTime().equals(record.getBeginTime()) ||
+                        !project.getRecord().getLocation().equals(record.getLocation())) {
+                    sendPresentationDataToUsersFromProject(id, project);
+                }
+
+                record.setThesisDate(project.getRecord().getThesisDate());
+                record.setBeginTime(project.getRecord().getBeginTime());
+                record.setLocation(project.getRecord().getLocation());
+
+                recordRepository.update(record.getId(), record);
             }
-
-            record.setThesisDate(project.getRecord().getThesisDate());
-            record.setBeginTime(project.getRecord().getBeginTime());
-            record.setLocation(project.getRecord().getLocation());
-
-            recordRepository.update(record.getId(), record);
         }
 
         projectRepository.update(id, project);

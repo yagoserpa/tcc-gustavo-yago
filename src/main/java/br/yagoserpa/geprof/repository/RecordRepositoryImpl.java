@@ -43,8 +43,7 @@ public class RecordRepositoryImpl implements RecordRepository {
 
     @Override
     public void insert(Record record) {
-        template.query("INSERT INTO record (project_id, thesis_date, begin_time, location) VALUES (?, ?, ?, ?)",
-                Record::new,
+        template.update("INSERT INTO record (project_id, thesis_date, begin_time, location) VALUES (?, ?, ?, ?)",
                 record.getProjectId(),
                 record.getThesisDate(),
                 record.getBeginTime(),
