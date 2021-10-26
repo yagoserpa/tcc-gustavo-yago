@@ -39,6 +39,13 @@ public class FieldOfInterestHasUserController {
         return fieldOfInterestHasUserRepository.findByFieldId(id);
     }
 
+    @GetMapping("/api/v1/public/user/{id}/fields")
+    public List<FieldOfInterest> publicFindByUser(
+            @PathVariable(value = "id") Long id
+    ) {
+        return fieldOfInterestHasUserRepository.findByUserId(id);
+    }
+
     @GetMapping("/api/v1/user/{id}/fields")
     public List<FieldOfInterest> findByUser(
             @PathVariable(value = "id") Long id
