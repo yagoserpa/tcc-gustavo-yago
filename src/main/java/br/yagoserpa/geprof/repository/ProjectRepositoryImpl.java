@@ -25,7 +25,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
     @Override
     public List<Project> findAllEnded() {
-        return template.query("SELECT * FROM project WHERE status = 2", Project::new);
+        return template.query("SELECT * FROM project WHERE status = ?", Project::new, Project.Status.ENDED.ordinal());
     }
 
     @Override
