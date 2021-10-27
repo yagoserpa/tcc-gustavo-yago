@@ -91,7 +91,7 @@ public class UserController {
         var savedTokenOptional = registerTokenRepository.findByToken(token);
 
         if (savedTokenOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.badRequest().build();
         }
 
         var savedToken = savedTokenOptional.get();
@@ -99,7 +99,7 @@ public class UserController {
         var userOptional = userRepository.findById(savedToken.getUserId());
 
         if (userOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.badRequest().build();
         }
 
         var user = userOptional.get();
@@ -129,7 +129,7 @@ public class UserController {
         var userOptional = userRepository.insert(user);
 
         if (userOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.badRequest().build();
         }
 
         var insertedUser = userOptional.get();
@@ -157,7 +157,7 @@ public class UserController {
         // Edit profile
         if (updatedUser.getCurrentPassword() != null && !updatedUser.getCurrentPassword().isEmpty()) {
             if (!userRepository.isValidUserPassword(id, updatedUser.getCurrentPassword())) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+                return ResponseEntity.badRequest().build();
             }
         }
 

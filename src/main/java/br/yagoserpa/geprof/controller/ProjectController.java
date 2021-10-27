@@ -90,7 +90,7 @@ public class ProjectController {
         var projectOptional = projectRepository.insert(project);
 
         if (projectOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.badRequest().build();
         }
 
         Auth auth = (Auth) request.getAttribute("auth");
@@ -207,7 +207,7 @@ public class ProjectController {
         var projectOptional = projectRepository.findById(id);
 
         if (projectOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.badRequest().build();
         }
 
         var project = projectOptional.get();
@@ -219,7 +219,7 @@ public class ProjectController {
         var advisorOptional = projectHasUserRepository.findAdvisorByProjectId(id);
 
         if (advisorOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.badRequest().build();
         }
 
         var advisor = advisorOptional.get();
@@ -242,7 +242,7 @@ public class ProjectController {
         var projectOptional = projectRepository.findById(id);
 
         if (projectOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.badRequest().build();
         }
 
         var project = projectOptional.get();
