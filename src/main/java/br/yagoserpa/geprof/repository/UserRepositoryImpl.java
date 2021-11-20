@@ -20,12 +20,12 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findAll() {
-        return template.query("SELECT * FROM users ORDER BY name ASC", User::new);
+        return template.query("SELECT * FROM users WHERE user_id NOT IN (SELECT user_id FROM register_token) ORDER BY name ASC", User::new);
     }
 
     @Override
     public List<User> findAllActive() {
-        return template.query("SELECT * FROM users WHERE status = 1 ORDER BY name ASC", User::new);
+        return template.query("SELECT * FROM users WHERE status = 1 AND user_id NOT IN (SELECT user_id FROM register_token) ORDER BY name ASC", User::new);
     }
 
     @Override

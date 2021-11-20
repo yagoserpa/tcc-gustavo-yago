@@ -118,6 +118,7 @@ public class UserController {
     }
 
     @PostMapping("/api/v1/user")
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public ResponseEntity<Void> insert(
             @RequestBody User user
     ) {
