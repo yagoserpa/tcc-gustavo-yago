@@ -57,7 +57,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findByLogin(String email, String password) {
-        List<User> users = template.query("SELECT * FROM users WHERE email = ? AND password = crypt(?, password) LIMIT 1",
+        List<User> users = template.query("SELECT * FROM users WHERE email = ? AND password = crypt(?, password) AND status = 1 LIMIT 1",
                 User::new,
                 email,
                 password);
