@@ -22,4 +22,8 @@ public interface UserRepository {
     Optional<User> insert(User user);
 
     void update(Long id, User user);
+
+    void activateUser(Long id);
+
+    void deactivateUser(Long id);
 }

@@ -58,7 +58,6 @@ public class UserController {
         var user = userOptional.get();
         var token = Jwts.builder()
                 .claim("id", user.getId())
-                //.setExpiration(new Date(new Date().getTime() + 600_000))// TODO: expirar o token
                 .signWith(SignatureAlgorithm.HS256, secret.getBytes())
                 .compact();
 
@@ -171,6 +170,22 @@ public class UserController {
 
         registerTokenRepository.deleteByUserId(id);
 
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/api/v1/user/{id}/activate")
+    public ResponseEntity<Void> activateUser(
+            @PathVariable(value = "id") Long id
+    ) {
+        userRepository.activateUser(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/api/v1/user/{id}/deactivate")
+    public ResponseEntity<Void> deactivateUser(
+            @PathVariable(value = "id") Long id
+    ) {
+        userRepository.deactivateUser(id);
         return ResponseEntity.ok().build();
     }
 

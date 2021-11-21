@@ -113,4 +113,20 @@ public class UserRepositoryImpl implements UserRepository {
                 id
         );
     }
+
+    @Override
+    public void activateUser(Long id) {
+        template.update("UPDATE users SET status = ? WHERE user_id = ?",
+                User.Status.ACTIVE.ordinal(),
+                id
+        );
+    }
+
+    @Override
+    public void deactivateUser(Long id) {
+        template.update("UPDATE users SET status = ? WHERE user_id = ?",
+                User.Status.INACTIVE.ordinal(),
+                id
+        );
+    }
 }
