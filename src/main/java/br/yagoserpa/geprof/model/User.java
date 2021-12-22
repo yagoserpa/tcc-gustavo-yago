@@ -34,6 +34,8 @@ public class User {
 
     private List<FieldOfInterest> fieldOfInterestList;
 
+    private Boolean hasUnfinishedProject;
+
     public User() {
     }
 
@@ -63,6 +65,11 @@ public class User {
 
         try {
             signature = resultSet.getString("signature");
+        } catch (Exception ignored) {
+        }
+
+        try {
+            hasUnfinishedProject = resultSet.getBoolean("has_unfinished_project");
         } catch (Exception ignored) {
         }
     }
@@ -241,6 +248,14 @@ public class User {
 
     public void setFieldOfInterestList(List<FieldOfInterest> fieldOfInterestList) {
         this.fieldOfInterestList = fieldOfInterestList;
+    }
+
+    public Boolean getHasUnfinishedProject() {
+        return hasUnfinishedProject;
+    }
+
+    public void setHasUnfinishedProject(Boolean hasUnfinishedProject) {
+        this.hasUnfinishedProject = hasUnfinishedProject;
     }
 
     public enum Status {

@@ -20,7 +20,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findAll() {
-        return template.query("SELECT * FROM users WHERE user_id NOT IN (SELECT user_id FROM register_token) ORDER BY name ASC", User::new);
+        return template.query("SELECT *, case when (SELECT true FROM project p, project_has_user phu, users u WHERE u.user_id = phu.user_id and phu.project_id = p.project_id AND p.status not in (4, 5) and u.user_id = us.user_id limit 1) then true else false end as has_unfinished_project FROM users us WHERE us.user_id NOT IN (SELECT user_id FROM register_token) ORDER BY name ASC", User::new);
     }
 
     @Override
